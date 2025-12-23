@@ -1,0 +1,206 @@
+
+    <div class="preview_inner clearfix">
+
+        
+        
+        <div class="preview_picture">
+                          <button class="open_descr_product"></button>
+
+                <div class="product-annotation">
+                 <button class="close">
+                                    </button>
+
+                                            <div class="product-annotation-table plink" data-dest="products/startovyj-nabor-vaporesso-xros-pro-2-original">
+                                                    <p><strong>Стартовый набор Vaporesso XROS PRO 2 (Original)</strong> -&nbsp;компактная POD‑система для повседневной MTL и мягкой RDL‑затяжки с двумя способами<strong data-start="432" data-end="489"> активации: по кнопке и по автозатяжке</strong>. Встроенный аккумулятор <strong data-start="514" data-end="527">2000 мА·ч</strong>, регулируемая мощность <strong data-start="551" data-end="563">до 30 Вт</strong>, цветной экран <strong data-start="579" data-end="588">0,96"</strong> и точный слайдер обдува на задней стороне позволяют тонко настроить ощущения. Кнопкой вы можете заблокировать устройство, менять мощность, переключать одну из шести тем интерфейса, открывать статистику затяжек и отслеживать потребление по графикам за день/неделю/месяц. Поддерживается <strong data-start="882" data-end="907">пасстру (passthrough)</strong> — устройством можно пользоваться во время зарядки по <strong data-start="961" data-end="978">USB‑C 5 В/2 А</strong>.</p>
+
+                                            </div>
+                    
+                </div>
+            
+
+            
+            <div class="preview_image plink" data-dest="products/startovyj-nabor-vaporesso-xros-pro-2-original">
+                                    <picture>
+                                                    <source type="image/webp" srcset="https://dartvaper.ua/files/products/7777n.500x500.jpg.webp" media="(max-width: 767px)">
+                            <source type="image/webp" srcset="https://dartvaper.ua/files/products/7777n.600x600.jpg.webp">
+                                                <source srcset="https://dartvaper.ua/files/products/7777n.500x500.jpg" media="(max-width: 767px)">
+                        <source srcset="https://dartvaper.ua/files/products/7777n.600x600.jpg">
+                        <img width="260" height="260" loading="lazy" class="preview_img" data-src="https://dartvaper.ua/files/products/7777n.600x600.jpg" srcset="https://dartvaper.ua/files/products/7777n.700x700.jpg 2x" alt="Стартовый набор Vaporesso XROS PRO 2 (Original)" title="Стартовый набор Vaporesso XROS PRO 2 (Original)">
+                    </picture>
+                
+                <div class="preview_status">
+                    <span class="lable_discount lable_discount_cat fn_discount hidden">
+                        -<span>-INF</span> %
+                    </span>
+                                        
+                    
+
+                                        <span class="lable_nostock fn_not_stock hidden" data-language="product_out_of_stock">Нет на складе</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="preview_info">
+
+                        <a class="product_name" data-product="14205" href="products/startovyj-nabor-vaporesso-xros-pro-2-original">Стартовый набор Vaporesso XROS PRO 2 (Original)</a>
+
+            <form class="fn_variants preview_form" action="/cart">
+
+                            <div class="price_container">
+                                        <div class="price">
+                        <span class="fn_price">1 199</span> <span>грн</span>
+                    </div>
+
+                                        <div class="old_price hidden">
+                        <span class="fn_old_price">0</span> <span>грн</span>
+                    </div>
+                </div>
+            
+                                <div id="product_14205" class="preview_rating">
+                    <span class="rating_starOff">
+                        <span class="rating_starOn" style="width:61.2px;"></span>
+                    </span>
+                    <span class="product_comments">
+                                          </span>
+
+                </div>
+
+                
+
+                
+                                <select name="variant" class="fn_variant variant_select ">
+                    
+                                                <option value="27561" data-price="1 199" data-stock="6" data-img="28610">
+
+                            Glittering Black</option>
+                                            
+                                                <option value="27562" data-price="1 199" data-stock="7" data-img="28612">
+
+                            Glittering Gold</option>
+                                            
+                                                <option value="27563" data-price="1 199" data-stock="4" data-img="28613">
+
+                            Glittering Silver</option>
+                                            
+                                                <option value="27564" data-price="1 199" data-stock="10" data-img="28611">
+
+                            Storm Blue</option>
+                                            
+                                                <option value="27565" data-price="1 199" data-stock="7" data-img="28608">
+
+                            Gem Green</option>
+                                            
+                                                <option value="27566" data-price="1 199" data-stock="10" data-img="28615">
+
+                            Moonlit Pink</option>
+                                            
+                                                <option value="27567" data-price="1 199" data-stock="6" data-img="28614">
+
+                            Dawn Purple</option>
+                                                            </select>
+
+                <div class="btn_wrap">
+                                                                    <button class="outstock_button fn_not_preorder  hidden" type="button" data-language="out_of_stock">Нет на складе</button>
+                    
+                                        <button class="buy_btn fn_is_stock" type="submit" data-language="add_to_cart">
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<svg class="basket_icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="19" height="19">
+    <path fill="currentColor" d="M0.064 1.888q0.256-0.64 0.864-0.928t1.216-0.128l4.8 1.536q1.024 0.32 1.12 1.376l0.32 2.688 21.952 2.464q0.736 0.16 1.12 0.704t0.32 1.216l-1.376 7.616q-0.256 1.376-1.568 1.376h-19.456l-0.352 2.208h18.496q0.672 0 1.152 0.448t0.48 1.152q-0.064 0.704-0.544 1.184t-1.088 0.448h-20.512q-0.8-0.064-1.248-0.608t-0.384-1.312l0.896-4.768-1.312-13.376-3.808-1.248q-1.44-0.544-1.088-2.048zM7.008 28.736q0-1.024 0.768-1.792t1.76-0.736 1.792 0.736 0.736 1.792-0.736 1.76-1.792 0.768-1.76-0.768-0.768-1.76zM22.016 28.736q0-1.024 0.736-1.792t1.792-0.736 1.792 0.736 0.736 1.792-0.736 1.76-1.792 0.768-1.792-0.768-0.736-1.76z"></path>
+</svg>
+
+
+
+
+
+
+
+                        <span>В корзину</span>
+                    </button>
+
+                    <div class="add_buttons">
+                                                                                                            <button type="button" data-id="14205" class="fn_wishlist wishlist_button" data-original-text="В избранное" data-result-text="Из избранного">
+                                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <svg class="favor_icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 32">
+        <path fill="currentColor" d="M25.28 6.656q2.24 2.048 2.24 4.992t-2.24 4.992l-11.52 10.56-11.52-10.56q-2.24-2.048-2.24-4.992t2.24-4.992q2.048-1.856 4.864-1.856t4.8 1.856l1.856 1.664 1.792-1.664q2.048-1.856 4.864-1.856t4.864 1.856zM23.552 14.976q1.344-1.28 1.344-3.328 0-2.112-1.216-3.2-1.216-1.216-3.264-1.216-1.664 0-3.328 1.536l-3.328 2.944-3.392-2.944q-1.536-1.536-3.264-1.536-2.048 0-3.328 1.216-1.216 1.152-1.216 3.2 0 2.112 1.408 3.328l9.792 9.152z"></path>
+    </svg>
+
+
+
+
+
+
+                                    <span>В избранное</span>
+                                </button>
+                                                    
+                        
+                                                                                                            <button class="fn_comparison comparison_button" type="button" data-id="14205" data-original-text="В сравнение" data-result-text="Из сравнения">
+                                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<svg class="compare_icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+    <path fill="currentColor" d="M24.288 5.792v-0.096h-6.528c-0.384-0.672-1.056-1.088-1.856-1.088s-1.504 0.416-1.856 1.088h-6.336v0.096l-7.328 14.88c0.032 3.968 3.328 7.264 7.36 7.264 4.064 0 7.36-3.36 7.392-7.36v0l-6.336-12.768h5.312c0.384 0.608 1.024 0.992 1.792 0.992 0.736 0 1.408-0.384 1.792-0.992h5.536l-6.368 12.864c0.032 3.968 3.328 7.264 7.392 7.264 4.032 0 7.328-3.36 7.36-7.36v0l-7.328-14.784zM2.56 20.576l5.216-10.528 5.184 10.528h-10.4zM19.040 20.576l5.216-10.528 5.184 10.528h-10.4z"></path>
+</svg>
+
+
+
+
+
+                                    <span>В сравнение</span>
+                                </button>
+                                                                        </div>
+                </div>
+                            </form>
+        </div>
+    </div>

@@ -1,0 +1,73 @@
+services:
+  mongo:
+    image: mongo:6
+    container_name: vape-mongo
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-secret}
+    networks:
+      - vape-net
+
+  server:
+    build:
+      context: ./server
+    container_name: vape-server
+    restart: unless-stopped
+    environment:
+      MONGODB_URI: mongodb://${MONGO_USER:-admin}:${MONGO_PASSWORD:-secret}@mongo:27017/vape-shop?authSource=admin
+      JWT_SECRET: ${JWT_SECRET:-change_me_in_production}
+      NODE_ENV: production
+      CLIENT_URL: ${CLIENT_URL:-http://localhost}
+      SERVER_URL: ${SERVER_URL:-http://localhost:5000}
+      # Payment & Delivery (optional)
+      LIQPAY_PUBLIC_KEY: ${LIQPAY_PUBLIC_KEY:-}
+      LIQPAY_PRIVATE_KEY: ${LIQPAY_PRIVATE_KEY:-}
+      NOVAPOSHTA_API_KEY: ${NOVAPOSHTA_API_KEY:-}
+      # Cloudinary (optional)
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME:-}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY:-}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET:-}
+    ports:
+      - "5000:5000"
+    volumes:
+      - uploads-data:/app/uploads
+    depends_on:
+      - mongo
+    networks:
+      - vape-net
+
+  client:
+    build:
+      context: ./client
+    container_name: vape-client
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - server
+    networks:
+      - vape-net
+
+  # Optional: Landing page (static HTML)
+  landing:
+    image: nginx:alpine
+    container_name: vape-landing
+    restart: unless-stopped
+    volumes:
+      - ./landing:/usr/share/nginx/html:ro
+    ports:
+      - "8080:80"
+    networks:
+      - vape-net
+
+networks:
+  vape-net:
+    driver: bridge
+
+volumes:
+  mongo-data:
+  uploads-data:

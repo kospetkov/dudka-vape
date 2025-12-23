@@ -1,0 +1,54 @@
+.discount-tag {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--font-size-sm);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: var(--radius-md);
+    z-index: 10;
+    backdrop-filter: blur(10px);
+    border: 2px solid;
+    transition: all var(--transition-base);
+    animation: scaleIn 0.3s ease-out;
+}
+
+.discount-tag-discount {
+    background: linear-gradient(135deg, rgba(255, 214, 10, 0.9) 0%, rgba(255, 149, 0, 0.9) 100%);
+    border-color: var(--color-warning);
+    color: var(--color-bg);
+}
+
+.discount-tag-new {
+    background: linear-gradient(135deg, rgba(0, 217, 197, 0.9) 0%, rgba(0, 184, 168, 0.9) 100%);
+    border-color: var(--color-primary);
+    color: var(--color-bg);
+}
+
+.discount-tag-hot {
+    background: linear-gradient(135deg, rgba(255, 45, 85, 0.9) 0%, rgba(191, 90, 242, 0.9) 100%);
+    border-color: var(--color-accent-pink);
+    color: var(--color-text-primary);
+}
+
+.discount-tag-premium {
+    background: linear-gradient(135deg, rgba(123, 97, 255, 0.9) 0%, rgba(149, 128, 255, 0.9) 100%);
+    border-color: var(--color-secondary);
+    color: var(--color-text-primary);
+}
+
+.discount-tag:hover {
+    transform: scale(1.1) rotate(-3deg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .discount-tag {
+        top: var(--spacing-sm);
+        right: var(--spacing-sm);
+        padding: 2px var(--spacing-sm);
+        font-size: var(--font-size-xs);
+    }
+}

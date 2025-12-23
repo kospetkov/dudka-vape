@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DudkaVape Admin Panel</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            /* Core Theme Colors */
+            --color-bg: #000000;
+            --color-bg-secondary: #1C1C1E;
+            --color-bg-tertiary: #2C2C2E;
+            --color-primary: #00D9C5;
+            --color-secondary: #7B61FF;
+            --color-text-primary: #FFFFFF;
+            --color-text-secondary: #EBEBF5;
+            --color-border: #38383A;
+            
+            /* Glow Effects */
+            --glow-cyan: 0 0 20px rgba(0, 217, 197, 0.6);
+            --glow-purple: 0 0 20px rgba(123, 97, 255, 0.6);
+            --glow-strong: 0 0 30px rgba(0, 217, 197, 0.8);
+            
+            /* Typography */
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-weight-light: 300;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+            --font-weight-extrabold: 800;
+            --font-weight-black: 900;
+            
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --spacing-3xl: 4rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--color-bg);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+        }
+
+        /* Login Modal */
+        .login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .login-form {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: var(--font-weight-bold);
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text-primary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: rgba(44, 44, 46, 0.8);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            color: var(--color-text-primary);
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: var(--glow-cyan);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: var(--color-bg);
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            font-size: 1rem;
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            box-shadow: var(--glow-cyan);
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow-strong);
+        }
+
+        .btn-secondary {
+            background: var(--color-bg-tertiary);
+            color: var(--color-text-primary);
+            border: 1px solid var(--color-border);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 217, 197, 0.1);
+            border-color: var(--color-primary);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-danger {
+            background: #ff4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #cc3333;
+        }
+
+        /* Header */
+        .admin-header {
+            background: var(--color-bg-secondary);
+            border-bottom: 1px solid var(--color-border);
+            padding: var(--spacing-lg) 0;
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        .admin-title {
+            font-size: 1.5rem;
+            font-weight: var(--font-weight-bold);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .btn-small {
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-size: 0.875rem;
+            width: auto;
+        }
+
+        /* Main Content */
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        /* Navigation */
+        .admin-nav {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-2xl);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-tab {
+            background: transparent;
+            border: 1px solid var(--color-border);
+            color: var(--color-text-secondary);
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+            font-weight: var(--font-weight-medium);
+        }
+
+        .nav-tab:hover {
+            color: var(--color-text-primary);
+            background: rgba(0, 217, 197, 0.1);
+        }
+
+        .nav-tab.active {
+            color: var(--color-primary);
+            background: rgba(0, 217, 197, 0.2);
+            border-color: var(--color-primary);
+            box-shadow: var(--glow-cyan);
+        }
+
+        /* Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .stat-card {
+            background: rgba(28, 28, 30, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .stat-label {
+            color: var(--color-text-secondary);
+            font-weight: var(--font-weight-medium);
+        }
+
+        /* Content Sections */
+        .admin-section {
+            display: none;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text-primary);
+        }
+
+        /* Table Styles */
+        .admin-table {
+            width: 100%;
+            background: rgba(28, 28, 30, 0.8);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .admin-table th {
+            background: var(--color-bg-tertiary);
+            color: var(--color-text-primary);
+            padding: var(--spacing-md);
+            text-align: left;
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .admin-table td {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--color-border);
+            color: var(--color-text-secondary);
+        }
+
+        .admin-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .admin-table tr:hover {
+            background: rgba(0, 217, 197, 0.05);
+        }
+
+        /* Form Styles */
+        .admin-form {
+            background: rgba(28, 28, 30, 0.8);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text-primary);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: rgba(44, 44, 46, 0.8);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            color: var(--color-text-primary);
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: var(--glow-cyan);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-checkbox {
+            width: auto;
+            margin-right: var(--spacing-sm);
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* Slider Styles */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            border-radius: var(--radius-xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .slider-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity var(--transition-slow);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-slide.active {
+            opacity: 1;
+        }
+
+        .slider-content {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: var(--spacing-2xl);
+            border-radius: var(--radius-xl);
+            backdrop-filter: blur(10px);
+        }
+
+        .slider-title {
+            font-size: 3rem;
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slider-subtitle {
+            font-size: 1.25rem;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: var(--spacing-lg);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .slider-dot.active {
+            background: var(--color-primary);
+            box-shadow: var(--glow-cyan);
+            transform: scale(1.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .admin-nav {
+                flex-wrap: wrap;
+            }
+
+            .nav-tab {
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: var(--spacing-md);
+                align-items: stretch;
+            }
+
+            .admin-table {
+                font-size: 0.875rem;
+            }
+
+            .admin-table th,
+            .admin-table td {
+                padding: var(--spacing-sm);
+            }
+
+            .slider-title {
+                font-size: 2rem;
+            }
+
+            .slider-subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-form {
+                margin: var(--spacing-md);
+                padding: var(--spacing-xl);
+            }
+
+            .admin-form {
+                padding: var(--spacing-xl);
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: var(--spacing-md);
+                text-align: center;
+            }
+
+            .slider-container {
+                height: 300px;
+            }
+
+            .slider-content {
+                padding: var(--spacing-lg);
+            }
+
+            .slider-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Modal -->
+    <div class="login-modal" id="login-modal">
+        <div class="login-form">
+            <h2 class="login-title">DudkaVape Admin</h2>
+            <div class="form-group">
+                <label class="form-label">Пароль</label>
+                <input type="password" class="form-input" id="admin-password" placeholder="Введіть пароль">
+            </div>
+            <button class="btn" onclick="login()">Увійти</button>
+        </div>
+    </div>
+
+    <!-- Admin Header -->
+    <header class="admin-header" id="admin-header" style="display: none;">
+        <div class="header-content">
+            <h1 class="admin-title">DudkaVape Admin Panel</h1>
+            <div class="header-actions">
+                <button class="btn btn-small btn-secondary" onclick="exportData()">Експорт JSON</button>
+                <input type="file" id="import-file" accept=".json" style="display: none;" onchange="importData(event)">
+                <button class="btn btn-small btn-secondary" onclick="document.getElementById('import-file').click()">Імпорт JSON</button>
+                <button class="btn btn-small btn-danger" onclick="logout()">Вийти</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="admin-container" id="admin-container" style="display: none;">
+        <!-- Navigation -->
+        <nav class="admin-nav">
+            <button class="nav-tab active" onclick="showSection('dashboard')">Дашборд</button>
+            <button class="nav-tab" onclick="showSection('products')">Товари</button>
+            <button class="nav-tab" onclick="showSection('categories')">Категорії</button>
+            <button class="nav-tab" onclick="showSection('slider')">Слайдер</button>
+            <button class="nav-tab" onclick="showSection('orders')">Замовлення</button>
+            <button class="nav-tab" onclick="showSection('settings')">Налаштування</button>
+        </nav>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="admin-section active">
+            <div class="dashboard-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-products">0</div>
+                    <div class="stat-label">Всього товарів</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="total-orders">0</div>
+                    <div class="stat-label">Замовлень сьогодні</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="total-revenue">0₴</div>
+                    <div class="stat-label">Дохід сьогодні</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="total-categories">0</div>
+                    <div class="stat-label">Категорій</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Section -->
+        <div id="products-section" class="admin-section">
+            <div class="section-header">
+                <h2 class="section-title">Управління товарами</h2>
+                <button class="btn" onclick="showProductForm()">Додати товар</button>
+            </div>
+
+            <!-- Product Form -->
+            <div id="product-form" class="admin-form" style="display: none;">
+                <h3 style="margin-bottom: var(--spacing-lg); color: var(--color-primary);">Форма товару</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Назва товару</label>
+                        <input type="text" class="form-input" id="product-name" placeholder="Введіть назву">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Категорія</label>
+                        <select class="form-select" id="product-category">
+                            <option value="liquids">E-Liquids</option>
+                            <option value="devices">Devices</option>
+                            <option value="pods">Pods</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ціна (₴)</label>
+                        <input type="number" class="form-input" id="product-price" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Стара ціна (₴)</label>
+                        <input type="number" class="form-input" id="product-old-price" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Знижка (%)</label>
+                        <input type="number" class="form-input" id="product-discount" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">URL зображення</label>
+                        <input type="url" class="form-input" id="product-image" placeholder="https://...">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Опис</label>
+                    <textarea class="form-textarea" id="product-description" placeholder="Опис товару..."></textarea>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Рівні нікотину (через кому)</label>
+                        <input type="text" class="form-input" id="product-nicotine" placeholder="0, 3, 6, 12">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Розміри (через кому)</label>
+                        <input type="text" class="form-input" id="product-sizes" placeholder="30ml, 60ml, 120ml">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Кольори (через кому)</label>
+                        <input type="text" class="form-input" id="product-colors" placeholder="Black, Silver, Blue">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Рейтинг</label>
+                        <input type="number" class="form-input" id="product-rating" step="0.1" min="0" max="5" placeholder="4.8">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="form-checkbox" id="product-featured">
+                        <span>Рекомендований товар</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="form-checkbox" id="product-in-stock" checked>
+                        <span>В наявності</span>
+                    </label>
+                </div>
+                <div style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-xl);">
+                    <button class="btn" onclick="saveProduct()">Зберегти</button>
+                    <button class="btn btn-secondary" onclick="hideProductForm()">Скасувати</button>
+                </div>
+            </div>
+
+            <!-- Products Table -->
+            <div id="products-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Назва</th>
+                            <th>Категорія</th>
+                            <th>Ціна</th>
+                            <th>Рейтинг</th>
+                            <th>В наявності</th>
+                            <th>Дії</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-table-body">
+                        <!-- Products will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Categories Section -->
+        <div id="categories-section" class="admin-section">
+            <div class="section-header">
+                <h2 class="section-title">Управління категоріями</h2>
+                <button class="btn" onclick="showCategoryForm()">Додати категорію</button>
+            </div>
+
+            <!-- Category Form -->
+            <div id="category-form" class="admin-form" style="display: none;">
+                <h3 style="margin-bottom: var(--spacing-lg); color: var(--color-primary);">Форма категорії</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Назва категорії</label>
+                        <input type="text" class="form-input" id="category-name" placeholder="Введіть назву">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Slug</label>
+                        <input type="text" class="form-input" id="category-slug" placeholder="liquids">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Іконка</label>
+                        <input type="text" class="form-input" id="category-icon" placeholder="🧪">
+                    </div>
+                </div>
+                <div style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-xl);">
+                    <button class="btn" onclick="saveCategory()">Зберегти</button>
+                    <button class="btn btn-secondary" onclick="hideCategoryForm()">Скасувати</button>
+                </div>
+            </div>
+
+            <!-- Categories Table -->
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Назва</th>
+                        <th>Slug</th>
+                        <th>Іконка</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody id="categories-table-body">
+                    <!-- Categories will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Slider Section -->
+        <div id="slider-section" class="admin-section">
+            <div class="section-header">
+                <h2 class="section-title">Налаштування слайдера</h2>
+                <div style="display: flex; gap: var(--spacing-md);">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="slider-enabled" onchange="toggleSlider()">
+                        <span>Увімкнути слайдер</span>
+                    </label>
+                    <button class="btn" onclick="showSlideForm()">Додати слайд</button>
+                </div>
+            </div>
+
+            <!-- Slide Form -->
+            <div id="slide-form" class="admin-form" style="display: none;">
+                <h3 style="margin-bottom: var(--spacing-lg); color: var(--color-primary);">Форма слайду</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">URL зображення</label>
+                        <input type="url" class="form-input" id="slide-image" placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Заголовок</label>
+                        <input type="text" class="form-input" id="slide-title" placeholder="Заголовок слайду">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Підзаголовок</label>
+                        <input type="text" class="form-input" id="slide-subtitle" placeholder="Підзаголовок">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Текст кнопки</label>
+                        <input type="text" class="form-input" id="slide-button-text" placeholder="Дізнатися більше">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Посилання кнопки</label>
+                        <input type="url" class="form-input" id="slide-button-link" placeholder="/products">
+                    </div>
+                </div>
+                <div style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-xl);">
+                    <button class="btn" onclick="saveSlide()">Зберегти</button>
+                    <button class="btn btn-secondary" onclick="hideSlideForm()">Скасувати</button>
+                </div>
+            </div>
+
+            <!-- Slides Table -->
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Зображення</th>
+                        <th>Заголовок</th>
+                        <th>Порядок</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody id="slides-table-body">
+                    <!-- Slides will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Orders Section -->
+        <div id="orders-section" class="admin-section">
+            <div class="section-header">
+                <h2 class="section-title">Замовлення</h2>
+            </div>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Клієнт</th>
+                        <th>Сума</th>
+                        <th>Статус</th>
+                        <th>Дата</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-table-body">
+                    <!-- Orders will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Settings Section -->
+        <div id="settings-section" class="admin-section">
+            <div class="section-header">
+                <h2 class="section-title">Налаштування магазину</h2>
+                <button class="btn" onclick="saveSettings()">Зберегти зміни</button>
+            </div>
+            
+            <div class="admin-form">
+                <h3 style="margin-bottom: var(--spacing-lg); color: var(--color-primary);">Загальні налаштування</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Назва магазину</label>
+                        <input type="text" class="form-input" id="store-name" placeholder="DudkaVape">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">URL логотипу</label>
+                        <input type="url" class="form-input" id="store-logo" placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="store-email" placeholder="info@dudkavape.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Телефон</label>
+                        <input type="tel" class="form-input" id="store-phone" placeholder="+380...">
+                    </div>
+                </div>
+
+                <h3 style="margin-bottom: var(--spacing-lg); color: var(--color-primary); margin-top: var(--spacing-2xl);">API Ключі</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">LiqPay Public Key</label>
+                        <input type="text" class="form-input" id="liqpay-public-key" placeholder="Ваш public key">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">LiqPay Private Key</label>
+                        <input type="password" class="form-input" id="liqpay-private-key" placeholder="Ваш private key">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nova Poshta API Key</label>
+                        <input type="password" class="form-input" id="nova-poshta-key" placeholder="Ваш API key">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Admin authentication
+        const ADMIN_PASSWORD = 'admin123';
+        let isAuthenticated = false;
+
+        // Data storage
+        let products = JSON.parse(localStorage.getItem('dudkavape_products')) || [
+            {
+                id: 1,
+                name: "Neon Clouds E-Liquid",
+                category: "liquids",
+                price: 749.97,
+                oldPrice: 899.97,
+                discount: 17,
+                image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=400&fit=crop",
+                description: "Premium e-liquid with a smooth blend of tropical fruits and menthol. Perfect for cloud chasing enthusiasts.",
+                nicotineLevels: [0, 3, 6, 12],
+                sizes: ["30ml", "60ml", "120ml"],
+                rating: 4.8,
+                inStock: true,
+                featured: true
+            },
+            {
+                id: 2,
+                name: "Cyber Punk Vape Mod",
+                category: "devices",
+                price: 2699.97,
+                oldPrice: 3599.97,
+                discount: 25,
+                image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop",
+                description: "High-performance vape mod with customizable LED lighting and advanced temperature control.",
+                colors: ["Black", "Silver", "Blue", "Purple"],
+                battery: "2000mAh",
+                wattage: "5-80W",
+                rating: 4.6,
+                inStock: true,
+                featured: true
+            }
+        ];
+
+        let categories = JSON.parse(localStorage.getItem('dudkavape_categories')) || [
+            { id: 'liquids', name: 'E-Liquids', slug: 'liquids', icon: '🧪' },
+            { id: 'devices', name: 'Devices', slug: 'devices', icon: '📱' },
+            { id: 'pods', name: 'Pods', slug: 'pods', icon: '🔋' }
+        ];
+
+        let sliderSettings = JSON.parse(localStorage.getItem('dudkavape_slider')) || {
+            enabled: true,
+            slides: [
+                {
+                    id: 1,
+                    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&h=500&fit=crop",
+                    title: "DudkaVape",
+                    subtitle: "Premium Vaping Experience",
+                    buttonText: "До покупок",
+                    buttonLink: "/#products"
+                }
+            ]
+        };
+
+        let orders = JSON.parse(localStorage.getItem('dudkavape_orders')) || [];
+        let settings = JSON.parse(localStorage.getItem('dudkavape_settings')) || {
+            storeName: 'DudkaVape',
+            logoUrl: '',
+            email: 'info@dudkavape.com',
+            phone: '+380123456789',
+            liqpayPublicKey: '',
+            liqpayPrivateKey: '',
+            novaPoshtaKey: ''
+        };
+
+        // Current editing state
+        let editingProductId = null;
+        let editingCategoryId = null;
+        let editingSlideId = null;
+
+        // Login function
+        function login() {
+            const password = document.getElementById('admin-password').value;
+            if (password === ADMIN_PASSWORD) {
+                isAuthenticated = true;
+                document.getElementById('login-modal').style.display = 'none';
+                document.getElementById('admin-header').style.display = 'block';
+                document.getElementById('admin-container').style.display = 'block';
+                loadDashboard();
+                loadProductsTable();
+                loadCategoriesTable();
+                loadSlidesTable();
+                loadOrdersTable();
+                loadSettings();
+            } else {
+                alert('Неправильний пароль!');
+            }
+        }
+
+        function logout() {
+            isAuthenticated = false;
+            document.getElementById('login-modal').style.display = 'flex';
+            document.getElementById('admin-header').style.display = 'none';
+            document.getElementById('admin-container').style.display = 'none';
+            document.getElementById('admin-password').value = '';
+        }
+
+        // Navigation
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + '-section').classList.add('active');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Dashboard
+        function loadDashboard() {
+            document.getElementById('total-products').textContent = products.length;
+            document.getElementById('total-categories').textContent = categories.length;
+            
+            // Mock data for orders and revenue
+            const todayOrders = orders.filter(order => {
+                const orderDate = new Date(order.date);
+                const today = new Date();
+                return orderDate.toDateString() === today.toDateString();
+            });
+            
+            document.getElementById('total-orders').textContent = todayOrders.length;
+            document.getElementById('total-revenue').textContent = 
+                todayOrders.reduce((sum, order) => sum + order.total, 0).toFixed(2) + '₴';
+        }
+
+        // Products CRUD
+        function showProductForm() {
+            document.getElementById('product-form').style.display = 'block';
+            document.getElementById('products-table-container').style.display = 'none';
+            clearProductForm();
+        }
+
+        function hideProductForm() {
+            document.getElementById('product-form').style.display = 'none';
+            document.getElementById('products-table-container').style.display = 'block';
+            clearProductForm();
+        }
+
+        function clearProductForm() {
+            editingProductId = null;
+            document.getElementById('product-name').value = '';
+            document.getElementById('product-category').value = 'liquids';
+            document.getElementById('product-price').value = '';
+            document.getElementById('product-old-price').value = '';
+            document.getElementById('product-discount').value = '';
+            document.getElementById('product-image').value = '';
+            document.getElementById('product-description').value = '';
+            document.getElementById('product-nicotine').value = '';
+            document.getElementById('product-sizes').value = '';
+            document.getElementById('product-colors').value = '';
+            document.getElementById('product-rating').value = '';
+            document.getElementById('product-featured').checked = false;
+            document.getElementById('product-in-stock').checked = true;
+        }
+
+        function editProduct(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            editingProductId = id;
+            
+            document.getElementById('product-name').value = product.name;
+            document.getElementById('product-category').value = product.category;
+            document.getElementById('product-price').value = product.price;
+            document.getElementById('product-old-price').value = product.oldPrice || '';
+            document.getElementById('product-discount').value = product.discount || '';
+            document.getElementById('product-image').value = product.image;
+            document.getElementById('product-description').value = product.description;
+            document.getElementById('product-nicotine').value = product.nicotineLevels ? product.nicotineLevels.join(', ') : '';
+            document.getElementById('product-sizes').value = product.sizes ? product.sizes.join(', ') : '';
+            document.getElementById('product-colors').value = product.colors ? product.colors.join(', ') : '';
+            document.getElementById('product-rating').value = product.rating;
+            document.getElementById('product-featured').checked = product.featured;
+            document.getElementById('product-in-stock').checked = product.inStock;
+            
+            showProductForm();
+        }
+
+        function deleteProduct(id) {
+            if (confirm('Ви впевнені, що хочете видалити цей товар?')) {
+                products = products.filter(p => p.id !== id);
+                saveProducts();
+                loadProductsTable();
+                loadDashboard();
+            }
+        }
+
+        function saveProduct() {
+            const product = {
+                id: editingProductId || Date.now(),
+                name: document.getElementById('product-name').value,
+                category: document.getElementById('product-category').value,
+                price: parseFloat(document.getElementById('product-price').value),
+                oldPrice: document.getElementById('product-old-price').value ? parseFloat(document.getElementById('product-old-price').value) : null,
+                discount: document.getElementById('product-discount').value ? parseInt(document.getElementById('product-discount').value) : null,
+                image: document.getElementById('product-image').value,
+                description: document.getElementById('product-description').value,
+                nicotineLevels: document.getElementById('product-nicotine').value ? 
+                    document.getElementById('product-nicotine').value.split(',').map(n => parseInt(n.trim())) : [],
+                sizes: document.getElementById('product-sizes').value ? 
+                    document.getElementById('product-sizes').value.split(',').map(s => s.trim()) : [],
+                colors: document.getElementById('product-colors').value ? 
+                    document.getElementById('product-colors').value.split(',').map(c => c.trim()) : [],
+                rating: parseFloat(document.getElementById('product-rating').value),
+                featured: document.getElementById('product-featured').checked,
+                inStock: document.getElementById('product-in-stock').checked
+            };
+
+            if (editingProductId) {
+                const index = products.findIndex(p => p.id === editingProductId);
+                products[index] = product;
+            } else {
+                products.push(product);
+            }
+
+            saveProducts();
+            loadProductsTable();
+            loadDashboard();
+            hideProductForm();
+        }
+
+        function loadProductsTable() {
+            const tbody = document.getElementById('products-table-body');
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>${product.category}</td>
+                    <td>${product.price}₴</td>
+                    <td>${product.rating}</td>
+                    <td>${product.inStock ? '✅' : '❌'}</td>
+                    <td>
+                        <button class="btn btn-small btn-secondary" onclick="editProduct(${product.id})">Редагувати</button>
+                        <button class="btn btn-small btn-danger" onclick="deleteProduct(${product.id})">Видалити</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Categories CRUD
+        function showCategoryForm() {
+            document.getElementById('category-form').style.display = 'block';
+            clearCategoryForm();
+        }
+
+        function hideCategoryForm() {
+            document.getElementById('category-form').style.display = 'none';
+            clearCategoryForm();
+        }
+
+        function clearCategoryForm() {
+            editingCategoryId = null;
+            document.getElementById('category-name').value = '';
+            document.getElementById('category-slug').value = '';
+            document.getElementById('category-icon').value = '';
+        }
+
+        function editCategory(id) {
+            const category = categories.find(c => c.id === id);
+            if (!category) return;
+
+            editingCategoryId = id;
+            document.getElementById('category-name').value = category.name;
+            document.getElementById('category-slug').value = category.slug;
+            document.getElementById('category-icon').value = category.icon;
+            showCategoryForm();
+        }
+
+        function deleteCategory(id) {
+            if (confirm('Ви впевнені, що хочете видалити цю категорію?')) {
+                categories = categories.filter(c => c.id !== id);
+                saveCategories();
+                loadCategoriesTable();
+                loadDashboard();
+            }
+        }
+
+        function saveCategory() {
+            const category = {
+                id: editingCategoryId || document.getElementById('category-slug').value,
+                name: document.getElementById('category-name').value,
+                slug: document.getElementById('category-slug').value,
+                icon: document.getElementById('category-icon').value
+            };
+
+            if (editingCategoryId) {
+                const index = categories.findIndex(c => c.id === editingCategoryId);
+                categories[index] = category;
+            } else {
+                categories.push(category);
+            }
+
+            saveCategories();
+            loadCategoriesTable();
+            loadDashboard();
+            hideCategoryForm();
+        }
+
+        function loadCategoriesTable() {
+            const tbody = document.getElementById('categories-table-body');
+            tbody.innerHTML = categories.map(category => `
+                <tr>
+                    <td>${category.id}</td>
+                    <td>${category.name}</td>
+                    <td>${category.slug}</td>
+                    <td>${category.icon}</td>
+                    <td>
+                        <button class="btn btn-small btn-secondary" onclick="editCategory('${category.id}')">Редагувати</button>
+                        <button class="btn btn-small btn-danger" onclick="deleteCategory('${category.id}')">Видалити</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Slider CRUD
+        function toggleSlider() {
+            sliderSettings.enabled = document.getElementById('slider-enabled').checked;
+            saveSliderSettings();
+        }
+
+        function showSlideForm() {
+            document.getElementById('slide-form').style.display = 'block';
+            clearSlideForm();
+        }
+
+        function hideSlideForm() {
+            document.getElementById('slide-form').style.display = 'none';
+            clearSlideForm();
+        }
+
+        function clearSlideForm() {
+            editingSlideId = null;
+            document.getElementById('slide-image').value = '';
+            document.getElementById('slide-title').value = '';
+            document.getElementById('slide-subtitle').value = '';
+            document.getElementById('slide-button-text').value = '';
+            document.getElementById('slide-button-link').value = '';
+        }
+
+        function editSlide(id) {
+            const slide = sliderSettings.slides.find(s => s.id === id);
+            if (!slide) return;
+
+            editingSlideId = id;
+            document.getElementById('slide-image').value = slide.image;
+            document.getElementById('slide-title').value = slide.title;
+            document.getElementById('slide-subtitle').value = slide.subtitle;
+            document.getElementById('slide-button-text').value = slide.buttonText;
+            document.getElementById('slide-button-link').value = slide.buttonLink;
+            showSlideForm();
+        }
+
+        function deleteSlide(id) {
+            if (confirm('Ви впевнені, що хочете видалити цей слайд?')) {
+                sliderSettings.slides = sliderSettings.slides.filter(s => s.id !== id);
+                saveSliderSettings();
+                loadSlidesTable();
+            }
+        }
+
+        function saveSlide() {
+            const slide = {
+                id: editingSlideId || Date.now(),
+                image: document.getElementById('slide-image').value,
+                title: document.getElementById('slide-title').value,
+                subtitle: document.getElementById('slide-subtitle').value,
+                buttonText: document.getElementById('slide-button-text').value,
+                buttonLink: document.getElementById('slide-button-link').value
+            };
+
+            if (editingSlideId) {
+                const index = sliderSettings.slides.findIndex(s => s.id === editingSlideId);
+                sliderSettings.slides[index] = slide;
+            } else {
+                sliderSettings.slides.push(slide);
+            }
+
+            saveSliderSettings();
+            loadSlidesTable();
+            hideSlideForm();
+        }
+
+        function loadSlidesTable() {
+            document.getElementById('slider-enabled').checked = sliderSettings.enabled;
+            
+            const tbody = document.getElementById('slides-table-body');
+            tbody.innerHTML = sliderSettings.slides.map((slide, index) => `
+                <tr>
+                    <td>${slide.id}</td>
+                    <td><img src="${slide.image}" alt="" style="width: 50px; height: 30px; object-fit: cover; border-radius: 4px;"></td>
+                    <td>${slide.title}</td>
+                    <td>${index + 1}</td>
+                    <td>
+                        <button class="btn btn-small btn-secondary" onclick="editSlide(${slide.id})">Редагувати</button>
+                        <button class="btn btn-small btn-danger" onclick="deleteSlide(${slide.id})">Видалити</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Orders
+        function loadOrdersTable() {
+            const tbody = document.getElementById('orders-table-body');
+            tbody.innerHTML = orders.map(order => `
+                <tr>
+                    <td>${order.id}</td>
+                    <td>${order.customer.name}</td>
+                    <td>${order.total}₴</td>
+                    <td>${order.status}</td>
+                    <td>${new Date(order.date).toLocaleDateString()}</td>
+                    <td>
+                        <button class="btn btn-small btn-secondary" onclick="viewOrder(${order.id})">Переглянути</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function viewOrder(id) {
+            const order = orders.find(o => o.id === id);
+            if (order) {
+                alert(`Замовлення №${order.id}\nКлієнт: ${order.customer.name}\nСума: ${order.total}₴\nСтатус: ${order.status}\n\nТовари:\n${order.items.map(item => `- ${item.name} (${item.quantity}шт)`).join('\n')}`);
+            }
+        }
+
+        // Settings
+        function loadSettings() {
+            document.getElementById('store-name').value = settings.storeName;
+            document.getElementById('store-logo').value = settings.logoUrl;
+            document.getElementById('store-email').value = settings.email;
+            document.getElementById('store-phone').value = settings.phone;
+            document.getElementById('liqpay-public-key').value = settings.liqpayPublicKey;
+            document.getElementById('liqpay-private-key').value = settings.liqpayPrivateKey;
+            document.getElementById('nova-poshta-key').value = settings.novaPoshtaKey;
+        }
+
+        function saveSettings() {
+            settings = {
+                storeName: document.getElementById('store-name').value,
+                logoUrl: document.getElementById('store-logo').value,
+                email: document.getElementById('store-email').value,
+                phone: document.getElementById('store-phone').value,
+                liqpayPublicKey: document.getElementById('liqpay-public-key').value,
+                liqpayPrivateKey: document.getElementById('liqpay-private-key').value,
+                novaPoshtaKey: document.getElementById('nova-poshta-key').value
+            };
+
+            localStorage.setItem('dudkavape_settings', JSON.stringify(settings));
+            alert('Налаштування збережено!');
+        }
+
+        // Data persistence
+        function saveProducts() {
+            localStorage.setItem('dudkavape_products', JSON.stringify(products));
+        }
+
+        function saveCategories() {
+            localStorage.setItem('dudkavape_categories', JSON.stringify(categories));
+        }
+
+        function saveSliderSettings() {
+            localStorage.setItem('dudkavape_slider', JSON.stringify(sliderSettings));
+        }
+
+        // Export/Import
+        function exportData() {
+            const data = {
+                products,
+                categories,
+                sliderSettings,
+                orders,
+                settings,
+                exportDate: new Date().toISOString()
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `dudkavape-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    if (data.products) {
+                        products = data.products;
+                        saveProducts();
+                    }
+                    if (data.categories) {
+                        categories = data.categories;
+                        saveCategories();
+                    }
+                    if (data.sliderSettings) {
+                        sliderSettings = data.sliderSettings;
+                        saveSliderSettings();
+                    }
+                    if (data.orders) {
+                        orders = data.orders;
+                        localStorage.setItem('dudkavape_orders', JSON.stringify(orders));
+                    }
+                    if (data.settings) {
+                        settings = data.settings;
+                        localStorage.setItem('dudkavape_settings', JSON.stringify(settings));
+                    }
+
+                    // Reload all data
+                    loadDashboard();
+                    loadProductsTable();
+                    loadCategoriesTable();
+                    loadSlidesTable();
+                    loadOrdersTable();
+                    loadSettings();
+                    
+                    alert('Дані успішно імпортовано!');
+                } catch (error) {
+                    alert('Помилка при імпорті даних: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if already logged in (for demo purposes)
+            if (localStorage.getItem('dudkavape_admin_session')) {
+                login();
+            }
+        });
+
+        // Save session (for demo)
+        function login() {
+            const password = document.getElementById('admin-password').value;
+            if (password === ADMIN_PASSWORD) {
+                isAuthenticated = true;
+                localStorage.setItem('dudkavape_admin_session', 'true');
+                document.getElementById('login-modal').style.display = 'none';
+                document.getElementById('admin-header').style.display = 'block';
+                document.getElementById('admin-container').style.display = 'block';
+                loadDashboard();
+                loadProductsTable();
+                loadCategoriesTable();
+                loadSlidesTable();
+                loadOrdersTable();
+                loadSettings();
+            } else {
+                alert('Неправильний пароль!');
+            }
+        }
+
+        function logout() {
+            isAuthenticated = false;
+            localStorage.removeItem('dudkavape_admin_session');
+            document.getElementById('login-modal').style.display = 'flex';
+            document.getElementById('admin-header').style.display = 'none';
+            document.getElementById('admin-container').style.display = 'none';
+            document.getElementById('admin-password').value = '';
+        }
+    </script>
+</body>
+</html>

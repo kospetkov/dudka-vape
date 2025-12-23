@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DudkaVape - Особистий Кабінет</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            /* Core Theme Colors */
+            --color-bg: #000000;
+            --color-bg-secondary: #1C1C1E;
+            --color-bg-tertiary: #2C2C2E;
+            --color-primary: #00D9C5;
+            --color-secondary: #7B61FF;
+            --color-text-primary: #FFFFFF;
+            --color-text-secondary: #EBEBF5;
+            --color-border: #38383A;
+            --color-success: #34D399;
+            --color-warning: #F59E0B;
+            --color-error: #EF4444;
+            
+            /* Glow Effects */
+            --glow-cyan: 0 0 20px rgba(0, 217, 197, 0.6);
+            --glow-purple: 0 0 20px rgba(123, 97, 255, 0.6);
+            --glow-strong: 0 0 30px rgba(0, 217, 197, 0.8);
+            
+            /* Typography */
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-weight-light: 300;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+            --font-weight-extrabold: 800;
+            --font-weight-black: 900;
+            
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --spacing-3xl: 4rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--color-bg);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--color-border);
+            z-index: 1000;
+            padding: var(--spacing-md) var(--spacing-xl);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary);
+            text-decoration: none;
+            text-shadow: var(--glow-cyan);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+        }
+
+        .header-link {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-weight: var(--font-weight-medium);
+            transition: color var(--transition-fast);
+        }
+
+        .header-link:hover {
+            color: var(--color-primary);
+        }
+
+        /* Main Container */
+        .main-container {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--color-bg-secondary);
+            border-right: 1px solid var(--color-border);
+            padding: var(--spacing-xl);
+            position: fixed;
+            top: 80px;
+            left: 0;
+            bottom: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md) var(--spacing-lg);
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background: var(--color-bg-tertiary);
+            color: var(--color-primary);
+        }
+
+        .sidebar-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            margin-left: 280px;
+            padding: var(--spacing-xl);
+            max-width: calc(100% - 280px);
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-xl);
+            color: var(--color-text-primary);
+        }
+
+        /* Login/Register Modal */
+        .auth-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .auth-form {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .auth-title {
+            font-size: 1.5rem;
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-xl);
+            text-align: center;
+            color: var(--color-primary);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text-secondary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: var(--color-bg-tertiary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            color: var(--color-text-primary);
+            font-size: 1rem;
+            transition: border-color var(--transition-fast);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: var(--glow-cyan);
+        }
+
+        .btn {
+            padding: var(--spacing-md) var(--spacing-xl);
+            background: var(--color-primary);
+            color: var(--color-bg);
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            width: 100%;
+        }
+
+        .btn:hover {
+            background: #00B8A6;
+            box-shadow: var(--glow-strong);
+        }
+
+        .btn-secondary {
+            background: var(--color-bg-tertiary);
+            color: var(--color-text-primary);
+            border: 1px solid var(--color-border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-border);
+            box-shadow: none;
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: var(--spacing-lg);
+        }
+
+        .auth-switch-link {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: var(--font-weight-medium);
+        }
+
+        .auth-switch-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Profile Section */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-2xl);
+            padding: var(--spacing-xl);
+            background: var(--color-bg-secondary);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--color-border);
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: var(--font-weight-bold);
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .profile-info h2 {
+            font-size: 1.5rem;
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .profile-info p {
+            color: var(--color-text-secondary);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-lg);
+            color: var(--color-text-primary);
+        }
+
+        /* Order Item */
+        .order-item {
+            background: var(--color-bg-tertiary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .order-number {
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-primary);
+        }
+
+        .order-date {
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .order-status {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            font-weight: var(--font-weight-semibold);
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--color-warning);
+        }
+
+        .status-paid {
+            background: rgba(0, 217, 197, 0.2);
+            color: var(--color-primary);
+        }
+
+        .status-shipped {
+            background: rgba(123, 97, 255, 0.2);
+            color: var(--color-secondary);
+        }
+
+        .status-delivered {
+            background: rgba(52, 211, 153, 0.2);
+            color: var(--color-success);
+        }
+
+        .order-products {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .order-product {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-sm) 0;
+        }
+
+        .order-product-image {
+            width: 50px;
+            height: 50px;
+            background: var(--color-border);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .order-product-info {
+            flex: 1;
+        }
+
+        .order-product-name {
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .order-product-price {
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .btn-small {
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-size: 0.9rem;
+            width: auto;
+        }
+
+        /* Loyalty Program */
+        .loyalty-card {
+            text-align: center;
+            padding: var(--spacing-2xl);
+        }
+
+        .loyalty-points {
+            font-size: 3rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .loyalty-tier {
+            font-size: 1.25rem;
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--color-bg-tertiary);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            transition: width var(--transition-normal);
+        }
+
+        /* Wishlist */
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .wishlist-item {
+            background: var(--color-bg-tertiary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .wishlist-image {
+            width: 100%;
+            height: 150px;
+            background: var(--color-border);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-secondary);
+        }
+
+        .wishlist-name {
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .wishlist-price {
+            color: var(--color-primary);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-md);
+        }
+
+        /* Address Card */
+        .address-card {
+            background: var(--color-bg-tertiary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .address-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .address-type {
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-primary);
+        }
+
+        .address-default {
+            background: var(--color-success);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+        }
+
+        /* Settings */
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-lg) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .toggle {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: var(--color-bg-tertiary);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background var(--transition-fast);
+        }
+
+        .toggle.active {
+            background: var(--color-primary);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform var(--transition-fast);
+        }
+
+        .toggle.active .toggle-slider {
+            transform: translateX(26px);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--color-border);
+            }
+
+            .content {
+                margin-left: 0;
+                max-width: 100%;
+                padding: var(--spacing-md);
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--spacing-sm);
+            }
+
+            .order-actions {
+                flex-direction: column;
+            }
+
+            .wishlist-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: var(--spacing-md);
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-0 {
+            margin-bottom: 0;
+        }
+
+        .mt-lg {
+            margin-top: var(--spacing-lg);
+        }
+
+        .text-success {
+            color: var(--color-success);
+        }
+
+        .text-warning {
+            color: var(--color-warning);
+        }
+
+        .text-error {
+            color: var(--color-error);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">DudkaVape</a>
+            <div class="header-actions">
+                <a href="index.html" class="header-link">Магазин</a>
+                <a href="index.html" class="header-link">Кошик</a>
+                <a href="account.html" class="header-link">Кабінет</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <ul class="sidebar-menu">
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link active" data-section="profile">
+                        <span class="sidebar-icon">👤</span>
+                        <span>Профіль</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" data-section="orders">
+                        <span class="sidebar-icon">📦</span>
+                        <span>Мої замовлення</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" data-section="wishlist">
+                        <span class="sidebar-icon">❤️</span>
+                        <span>Список бажань</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" data-section="loyalty">
+                        <span class="sidebar-icon">🎁</span>
+                        <span>Бонуси та знижки</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" data-section="addresses">
+                        <span class="sidebar-icon">📍</span>
+                        <span>Адреси доставки</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" data-section="settings">
+                        <span class="sidebar-icon">⚙️</span>
+                        <span>Налаштування</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" id="logout-btn">
+                        <span class="sidebar-icon">🚪</span>
+                        <span>Вийти</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Content Area -->
+        <main class="content">
+            <!-- Profile Section -->
+            <section class="content-section active" id="profile">
+                <h1 class="section-title">Особистий Кабінет</h1>
+                
+                <div class="profile-header">
+                    <div class="avatar" id="user-avatar">DV</div>
+                    <div class="profile-info">
+                        <h2 id="user-name">Ім'я Користувача</h2>
+                        <p id="user-email">email@example.com</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Редагувати профіль</h3>
+                    <form id="profile-form">
+                        <div class="form-group">
+                            <label class="form-label">Ім'я</label>
+                            <input type="text" class="form-input" id="profile-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" id="profile-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Телефон</label>
+                            <input type="tel" class="form-input" id="profile-phone">
+                        </div>
+                        <button type="submit" class="btn">Зберегти зміни</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Змінити пароль</h3>
+                    <form id="password-form">
+                        <div class="form-group">
+                            <label class="form-label">Поточний пароль</label>
+                            <input type="password" class="form-input" id="current-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Новий пароль</label>
+                            <input type="password" class="form-input" id="new-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Підтвердити пароль</label>
+                            <input type="password" class="form-input" id="confirm-password" required>
+                        </div>
+                        <button type="submit" class="btn">Змінити пароль</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Orders Section -->
+            <section class="content-section" id="orders">
+                <h1 class="section-title">Мої замовлення</h1>
+                <div id="orders-container">
+                    <!-- Orders will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Wishlist Section -->
+            <section class="content-section" id="wishlist">
+                <h1 class="section-title">Список бажань</h1>
+                <div class="wishlist-grid" id="wishlist-container">
+                    <!-- Wishlist items will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Loyalty Section -->
+            <section class="content-section" id="loyalty">
+                <h1 class="section-title">Бонуси та знижки</h1>
+                
+                <div class="card loyalty-card">
+                    <div class="loyalty-points" id="loyalty-points">0</div>
+                    <div class="loyalty-tier" id="loyalty-tier">Bronze</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <p>до наступного рівня: <span id="points-to-next">1000</span> балів</p>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Історія балів</h3>
+                    <div id="points-history">
+                        <!-- Points history will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Доступні нагороди</h3>
+                    <div id="available-rewards">
+                        <!-- Rewards will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Addresses Section -->
+            <section class="content-section" id="addresses">
+                <h1 class="section-title">Адреси доставки</h1>
+                
+                <div class="card">
+                    <h3 class="card-title">Додати нову адресу</h3>
+                    <form id="address-form">
+                        <div class="form-group">
+                            <label class="form-label">Тип адреси</label>
+                            <select class="form-input" id="address-type">
+                                <option value="home">Дім</option>
+                                <option value="work">Робота</option>
+                                <option value="other">Інше</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Місто</label>
+                            <input type="text" class="form-input" id="address-city" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Відділення Нової Пошти</label>
+                            <input type="text" class="form-input" id="address-branch" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Ім'я отримувача</label>
+                            <input type="text" class="form-input" id="address-recipient" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" id="address-default"> Зробити адресою за замовчуванням
+                            </label>
+                        </div>
+                        <button type="submit" class="btn">Додати адресу</button>
+                    </form>
+                </div>
+
+                <div id="addresses-container">
+                    <!-- Saved addresses will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section class="content-section" id="settings">
+                <h1 class="section-title">Налаштування</h1>
+                
+                <div class="card">
+                    <h3 class="card-title">Сповіщення</h3>
+                    <div class="setting-item">
+                        <div>
+                            <div class="setting-title">Email сповіщення</div>
+                            <div class="setting-description">Отримувати сповіщення на email</div>
+                        </div>
+                        <div class="toggle active" data-setting="email-notifications">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <div>
+                            <div class="setting-title">SMS сповіщення</div>
+                            <div class="setting-description">Отримувати SMS про статус замовлення</div>
+                        </div>
+                        <div class="toggle active" data-setting="sms-notifications">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Мова</h3>
+                    <div class="form-group">
+                        <select class="form-input" id="language-select">
+                            <option value="uk">Українська</option>
+                            <option value="ru">Русский</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Акаунт</h3>
+                    <button class="btn btn-secondary" id="delete-account-btn" style="background: var(--color-error); color: white;">
+                        Видалити акаунт
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="auth-modal" id="auth-modal">
+        <div class="auth-form">
+            <h2 class="auth-title" id="auth-title">Вхід</h2>
+            
+            <!-- Login Form -->
+            <form id="login-form" class="auth-content">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <input type="password" class="form-input" id="login-password" required>
+                </div>
+                <div class="form-group">
+                    <a href="#" class="auth-switch-link" id="forgot-password">Забули пароль?</a>
+                </div>
+                <button type="submit" class="btn">Увійти</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="register-form" class="auth-content hidden">
+                <div class="form-group">
+                    <label class="form-label">Ім'я</label>
+                    <input type="text" class="form-input" id="register-name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Телефон</label>
+                    <input type="tel" class="form-input" id="register-phone">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <input type="password" class="form-input" id="register-password" required>
+                </div>
+                <button type="submit" class="btn">Зареєструватися</button>
+            </form>
+
+            <div class="auth-switch">
+                <span id="auth-switch-text">Немає акаунту?</span>
+                <a href="#" class="auth-switch-link" id="auth-switch-link">Зареєструватися</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Account Management System
+        class AccountManager {
+            constructor() {
+                this.currentUser = null;
+                this.users = this.loadUsers();
+                this.orders = this.loadOrders();
+                this.wishlist = this.loadWishlist();
+                this.loyaltyPoints = this.loadLoyaltyPoints();
+                this.addresses = this.loadAddresses();
+                this.settings = this.loadSettings();
+                
+                this.init();
+            }
+
+            init() {
+                this.checkAuthStatus();
+                this.bindEvents();
+                this.loadContent();
+            }
+
+            // Authentication
+            checkAuthStatus() {
+                const savedUser = localStorage.getItem('currentUser');
+                if (savedUser) {
+                    this.currentUser = JSON.parse(savedUser);
+                    this.hideAuthModal();
+                    this.updateProfileDisplay();
+                } else {
+                    this.showAuthModal();
+                }
+            }
+
+            showAuthModal() {
+                document.getElementById('auth-modal').style.display = 'flex';
+                document.getElementById('sidebar').style.display = 'none';
+                document.querySelector('.content').style.display = 'none';
+            }
+
+            hideAuthModal() {
+                document.getElementById('auth-modal').style.display = 'none';
+                document.getElementById('sidebar').style.display = 'block';
+                document.querySelector('.content').style.display = 'block';
+            }
+
+            login(email, password) {
+                const user = this.users.find(u => u.email === email && u.password === password);
+                if (user) {
+                    this.currentUser = user;
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    this.hideAuthModal();
+                    this.updateProfileDisplay();
+                    this.loadContent();
+                    return true;
+                }
+                return false;
+            }
+
+            register(userData) {
+                if (this.users.find(u => u.email === userData.email)) {
+                    return false;
+                }
+
+                const newUser = {
+                    id: Date.now(),
+                    name: userData.name,
+                    email: userData.email,
+                    phone: userData.phone,
+                    password: userData.password,
+                    createdAt: new Date().toISOString()
+                };
+
+                this.users.push(newUser);
+                this.saveUsers();
+                
+                // Auto login after registration
+                this.currentUser = newUser;
+                localStorage.setItem('currentUser', JSON.stringify(newUser));
+                this.hideAuthModal();
+                this.updateProfileDisplay();
+                this.loadContent();
+                return true;
+            }
+
+            logout() {
+                this.currentUser = null;
+                localStorage.removeItem('currentUser');
+                this.showAuthModal();
+            }
+
+            // Profile Management
+            updateProfile(userData) {
+                if (!this.currentUser) return false;
+
+                this.currentUser.name = userData.name;
+                this.currentUser.email = userData.email;
+                this.currentUser.phone = userData.phone;
+
+                // Update in users array
+                const userIndex = this.users.findIndex(u => u.id === this.currentUser.id);
+                if (userIndex !== -1) {
+                    this.users[userIndex] = this.currentUser;
+                    this.saveUsers();
+                }
+
+                localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+                this.updateProfileDisplay();
+                return true;
+            }
+
+            changePassword(currentPassword, newPassword) {
+                if (!this.currentUser) return false;
+                
+                if (this.currentUser.password !== currentPassword) {
+                    return false;
+                }
+
+                this.currentUser.password = newPassword;
+                
+                // Update in users array
+                const userIndex = this.users.findIndex(u => u.id === this.currentUser.id);
+                if (userIndex !== -1) {
+                    this.users[userIndex] = this.currentUser;
+                    this.saveUsers();
+                }
+
+                localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+                return true;
+            }
+
+            updateProfileDisplay() {
+                if (!this.currentUser) return;
+
+                // Update avatar and profile info
+                const initials = this.currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase() || 'DV';
+                document.getElementById('user-avatar').textContent = initials;
+                document.getElementById('user-name').textContent = this.currentUser.name;
+                document.getElementById('user-email').textContent = this.currentUser.email;
+
+                // Update form fields
+                document.getElementById('profile-name').value = this.currentUser.name;
+                document.getElementById('profile-email').value = this.currentUser.email;
+                document.getElementById('profile-phone').value = this.currentUser.phone || '';
+            }
+
+            // Content Loading
+            loadContent() {
+                if (!this.currentUser) return;
+
+                this.loadOrders();
+                this.loadWishlist();
+                this.loadLoyaltyInfo();
+                this.loadAddresses();
+            }
+
+            loadOrders() {
+                const container = document.getElementById('orders-container');
+                const userOrders = this.orders.filter(order => order.userId === this.currentUser.id);
+
+                if (userOrders.length === 0) {
+                    container.innerHTML = '<div class="text-center" style="color: var(--color-text-secondary);">У вас ще немає замовлень</div>';
+                    return;
+                }
+
+                container.innerHTML = userOrders.map(order => `
+                    <div class="order-item">
+                        <div class="order-header">
+                            <div>
+                                <div class="order-number">Замовлення #${order.id}</div>
+                                <div class="order-date">${new Date(order.date).toLocaleDateString('uk-UA')}</div>
+                            </div>
+                            <div class="order-status status-${order.status}">${this.getStatusText(order.status)}</div>
+                        </div>
+                        
+                        <div class="order-products">
+                            ${order.items.map(item => `
+                                <div class="order-product">
+                                    <div class="order-product-image">${item.name.charAt(0)}</div>
+                                    <div class="order-product-info">
+                                        <div class="order-product-name">${item.name}</div>
+                                        <div class="order-product-price">${item.quantity} × ${item.price}₴</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <div><strong>Разом: ${order.total}₴</strong></div>
+                            <div style="color: var(--color-text-secondary); font-size: 0.9rem;">
+                                ${order.deliveryMethod === 'nova-poshta' ? `Нова Пошта: ${order.branch}` : 'Самовивіз'}
+                            </div>
+                        </div>
+                        
+                        <div class="order-actions">
+                            <button class="btn btn-small" onclick="accountManager.trackOrder('${order.trackingNumber}')">
+                                Відстежити
+                            </button>
+                            <button class="btn btn-small btn-secondary" onclick="accountManager.reorder(${order.id})">
+                                Повторити замовлення
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            loadWishlist() {
+                const container = document.getElementById('wishlist-container');
+                
+                if (this.wishlist.length === 0) {
+                    container.innerHTML = '<div class="text-center" style="color: var(--color-text-secondary);">Список бажань порожній</div>';
+                    return;
+                }
+
+                // Mock product data for wishlist
+                const mockProducts = [
+                    { id: 1, name: 'Vaporesso XROS 3', price: 899 },
+                    { id: 2, name: 'GeekVape Aegis Boost', price: 1299 },
+                    { id: 3, name: 'SMOK Nord 4', price: 799 },
+                    { id: 4, name: 'Voopoo Drag S', price: 1099 },
+                    { id: 5, name: 'Uwell Caliburn G2', price: 699 },
+                    { id: 6, name: 'Aspire Nautilus Prime', price: 999 }
+                ];
+
+                const wishlistProducts = mockProducts.filter(p => this.wishlist.includes(p.id));
+
+                container.innerHTML = wishlistProducts.map(product => `
+                    <div class="wishlist-item">
+                        <div class="wishlist-image">${product.name.charAt(0)}</div>
+                        <div class="wishlist-name">${product.name}</div>
+                        <div class="wishlist-price">${product.price}₴</div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-small" onclick="accountManager.addToCart(${product.id})">
+                                В кошик
+                            </button>
+                            <button class="btn btn-small btn-secondary" onclick="accountManager.removeFromWishlist(${product.id})">
+                                Видалити
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            loadLoyaltyInfo() {
+                const points = this.loyaltyPoints;
+                const tier = this.getLoyaltyTier(points);
+                const nextTier = this.getNextTier(points);
+                const pointsToNext = nextTier ? nextTier.minPoints - points : 0;
+                const progress = nextTier ? (points / nextTier.minPoints) * 100 : 100;
+
+                document.getElementById('loyalty-points').textContent = points;
+                document.getElementById('loyalty-tier').textContent = tier.name;
+                document.getElementById('points-to-next').textContent = pointsToNext;
+                document.getElementById('progress-fill').style.width = progress + '%';
+            }
+
+            loadAddresses() {
+                const container = document.getElementById('addresses-container');
+                
+                if (this.addresses.length === 0) {
+                    container.innerHTML = '<div class="text-center" style="color: var(--color-text-secondary);">Збережених адрес немає</div>';
+                    return;
+                }
+
+                container.innerHTML = this.addresses.map(address => `
+                    <div class="address-card">
+                        <div class="address-header">
+                            <div class="address-type">${this.getAddressTypeText(address.type)}</div>
+                            ${address.isDefault ? '<div class="address-default">За замовчуванням</div>' : ''}
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <strong>${address.recipient}</strong><br>
+                            ${address.city}, відділення ${address.branch}
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-small" onclick="accountManager.editAddress(${address.id})">
+                                Редагувати
+                            </button>
+                            <button class="btn btn-small btn-secondary" onclick="accountManager.deleteAddress(${address.id})">
+                                Видалити
+                            </button>
+                            ${!address.isDefault ? `<button class="btn btn-small" onclick="accountManager.setDefaultAddress(${address.id})">За замовчуванням</button>` : ''}
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Event Handlers
+            bindEvents() {
+                // Navigation
+                document.querySelectorAll('.sidebar-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const section = link.dataset.section;
+                        if (section) {
+                            this.showSection(section);
+                            this.updateActiveNav(link);
+                        }
+                    });
+                });
+
+                // Logout
+                document.getElementById('logout-btn').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.logout();
+                });
+
+                // Auth form switching
+                document.getElementById('auth-switch-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.toggleAuthForm();
+                });
+
+                // Login form
+                document.getElementById('login-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const email = document.getElementById('login-email').value;
+                    const password = document.getElementById('login-password').value;
+                    
+                    if (this.login(email, password)) {
+                        alert('Вхід успішний!');
+                    } else {
+                        alert('Неправильний email або пароль!');
+                    }
+                });
+
+                // Register form
+                document.getElementById('register-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const userData = {
+                        name: document.getElementById('register-name').value,
+                        email: document.getElementById('register-email').value,
+                        phone: document.getElementById('register-phone').value,
+                        password: document.getElementById('register-password').value
+                    };
+                    
+                    if (this.register(userData)) {
+                        alert('Реєстрація успішна!');
+                    } else {
+                        alert('Користувач з таким email вже існує!');
+                    }
+                });
+
+                // Profile form
+                document.getElementById('profile-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const userData = {
+                        name: document.getElementById('profile-name').value,
+                        email: document.getElementById('profile-email').value,
+                        phone: document.getElementById('profile-phone').value
+                    };
+                    
+                    if (this.updateProfile(userData)) {
+                        alert('Профіль оновлено!');
+                    }
+                });
+
+                // Password form
+                document.getElementById('password-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const currentPassword = document.getElementById('current-password').value;
+                    const newPassword = document.getElementById('new-password').value;
+                    const confirmPassword = document.getElementById('confirm-password').value;
+                    
+                    if (newPassword !== confirmPassword) {
+                        alert('Паролі не співпадають!');
+                        return;
+                    }
+                    
+                    if (this.changePassword(currentPassword, newPassword)) {
+                        alert('Пароль змінено!');
+                        document.getElementById('password-form').reset();
+                    } else {
+                        alert('Неправильний поточний пароль!');
+                    }
+                });
+
+                // Address form
+                document.getElementById('address-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.addAddress();
+                });
+
+                // Settings toggles
+                document.querySelectorAll('.toggle').forEach(toggle => {
+                    toggle.addEventListener('click', () => {
+                        toggle.classList.toggle('active');
+                        const setting = toggle.dataset.setting;
+                        if (setting) {
+                            this.settings[setting] = toggle.classList.contains('active');
+                            this.saveSettings();
+                        }
+                    });
+                });
+
+                // Delete account
+                document.getElementById('delete-account-btn').addEventListener('click', () => {
+                    if (confirm('Ви впевнені, що хочете видалити акаунт? Цю дію не можна скасувати.')) {
+                        this.deleteAccount();
+                    }
+                });
+            }
+
+            showSection(sectionName) {
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(sectionName).classList.add('active');
+            }
+
+            updateActiveNav(activeLink) {
+                document.querySelectorAll('.sidebar-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                activeLink.classList.add('active');
+            }
+
+            toggleAuthForm() {
+                const loginForm = document.getElementById('login-form');
+                const registerForm = document.getElementById('register-form');
+                const title = document.getElementById('auth-title');
+                const switchText = document.getElementById('auth-switch-text');
+                const switchLink = document.getElementById('auth-switch-link');
+
+                if (loginForm.classList.contains('hidden')) {
+                    // Show login form
+                    loginForm.classList.remove('hidden');
+                    registerForm.classList.add('hidden');
+                    title.textContent = 'Вхід';
+                    switchText.textContent = 'Немає акаунту?';
+                    switchLink.textContent = 'Зареєструватися';
+                } else {
+                    // Show register form
+                    loginForm.classList.add('hidden');
+                    registerForm.classList.remove('hidden');
+                    title.textContent = 'Реєстрація';
+                    switchText.textContent = 'Вже є акаунт?';
+                    switchLink.textContent = 'Увійти';
+                }
+            }
+
+            // Utility Methods
+            getStatusText(status) {
+                const statuses = {
+                    'pending': 'Очікує оплати',
+                    'paid': 'Оплачено',
+                    'shipped': 'Відправлено',
+                    'delivered': 'Доставлено'
+                };
+                return statuses[status] || status;
+            }
+
+            getLoyaltyTier(points) {
+                const tiers = [
+                    { name: 'Bronze', minPoints: 0, discount: 0 },
+                    { name: 'Silver', minPoints: 1000, discount: 5 },
+                    { name: 'Gold', minPoints: 2500, discount: 10 },
+                    { name: 'Platinum', minPoints: 5000, discount: 15 }
+                ];
+
+                for (let i = tiers.length - 1; i >= 0; i--) {
+                    if (points >= tiers[i].minPoints) {
+                        return tiers[i];
+                    }
+                }
+                return tiers[0];
+            }
+
+            getNextTier(points) {
+                const tiers = [
+                    { name: 'Silver', minPoints: 1000, discount: 5 },
+                    { name: 'Gold', minPoints: 2500, discount: 10 },
+                    { name: 'Platinum', minPoints: 5000, discount: 15 }
+                ];
+
+                return tiers.find(tier => points < tier.minPoints);
+            }
+
+            getAddressTypeText(type) {
+                const types = {
+                    'home': 'Дім',
+                    'work': 'Робота',
+                    'other': 'Інше'
+                };
+                return types[type] || type;
+            }
+
+            // Address Management
+            addAddress() {
+                const addressData = {
+                    id: Date.now(),
+                    type: document.getElementById('address-type').value,
+                    city: document.getElementById('address-city').value,
+                    branch: document.getElementById('address-branch').value,
+                    recipient: document.getElementById('address-recipient').value,
+                    isDefault: document.getElementById('address-default').checked
+                };
+
+                // If this is the first address, make it default
+                if (this.addresses.length === 0) {
+                    addressData.isDefault = true;
+                }
+
+                // If this address is set as default, remove default from others
+                if (addressData.isDefault) {
+                    this.addresses.forEach(addr => addr.isDefault = false);
+                }
+
+                this.addresses.push(addressData);
+                this.saveAddresses();
+                this.loadAddresses();
+                
+                // Reset form
+                document.getElementById('address-form').reset();
+                alert('Адресу додано!');
+            }
+
+            deleteAddress(addressId) {
+                if (confirm('Видалити цю адресу?')) {
+                    this.addresses = this.addresses.filter(addr => addr.id !== addressId);
+                    this.saveAddresses();
+                    this.loadAddresses();
+                }
+            }
+
+            setDefaultAddress(addressId) {
+                this.addresses.forEach(addr => addr.isDefault = addr.id === addressId);
+                this.saveAddresses();
+                this.loadAddresses();
+            }
+
+            // Wishlist Management
+            addToWishlist(productId) {
+                if (!this.wishlist.includes(productId)) {
+                    this.wishlist.push(productId);
+                    this.saveWishlist();
+                    this.loadWishlist();
+                }
+            }
+
+            removeFromWishlist(productId) {
+                this.wishlist = this.wishlist.filter(id => id !== productId);
+                this.saveWishlist();
+                this.loadWishlist();
+            }
+
+            addToCart(productId) {
+                // This would integrate with the main cart system
+                alert('Товар додано до кошика!');
+            }
+
+            // Order Management
+            trackOrder(trackingNumber) {
+                window.open(`https://novaposhta.ua/tracking/?cargo_number=${trackingNumber}`, '_blank');
+            }
+
+            reorder(orderId) {
+                const order = this.orders.find(o => o.id === orderId);
+                if (order) {
+                    // Add all items to cart
+                    order.items.forEach(item => {
+                        this.addToCart(item.id);
+                    });
+                    alert('Товари додано до кошика!');
+                }
+            }
+
+            deleteAccount() {
+                // Remove user from users array
+                this.users = this.users.filter(u => u.id !== this.currentUser.id);
+                this.saveUsers();
+                
+                // Clear all user data
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem(`orders_${this.currentUser.id}`);
+                localStorage.removeItem(`wishlist_${this.currentUser.id}`);
+                localStorage.removeItem(`loyalty_${this.currentUser.id}`);
+                localStorage.removeItem(`addresses_${this.currentUser.id}`);
+                localStorage.removeItem(`settings_${this.currentUser.id}`);
+                
+                alert('Акаунт видалено!');
+                this.logout();
+            }
+
+            // Data Loading and Saving
+            loadUsers() {
+                return JSON.parse(localStorage.getItem('users') || '[]');
+            }
+
+            saveUsers() {
+                localStorage.setItem('users', JSON.stringify(this.users));
+            }
+
+            loadOrders() {
+                if (!this.currentUser) return [];
+                return JSON.parse(localStorage.getItem(`orders_${this.currentUser.id}`) || '[]');
+            }
+
+            saveOrders() {
+                if (!this.currentUser) return;
+                localStorage.setItem(`orders_${this.currentUser.id}`, JSON.stringify(this.orders));
+            }
+
+            loadWishlist() {
+                if (!this.currentUser) return [];
+                return JSON.parse(localStorage.getItem(`wishlist_${this.currentUser.id}`) || '[]');
+            }
+
+            saveWishlist() {
+                if (!this.currentUser) return;
+                localStorage.setItem(`wishlist_${this.currentUser.id}`, JSON.stringify(this.wishlist));
+            }
+
+            loadLoyaltyPoints() {
+                if (!this.currentUser) return 0;
+                return parseInt(localStorage.getItem(`loyalty_${this.currentUser.id}`) || '0');
+            }
+
+            saveLoyaltyPoints() {
+                if (!this.currentUser) return;
+                localStorage.setItem(`loyalty_${this.currentUser.id}`, this.loyaltyPoints.toString());
+            }
+
+            loadAddresses() {
+                if (!this.currentUser) return [];
+                return JSON.parse(localStorage.getItem(`addresses_${this.currentUser.id}`) || '[]');
+            }
+
+            saveAddresses() {
+                if (!this.currentUser) return;
+                localStorage.setItem(`addresses_${this.currentUser.id}`, JSON.stringify(this.addresses));
+            }
+
+            loadSettings() {
+                if (!this.currentUser) return {
+                    'email-notifications': true,
+                    'sms-notifications': true,
+                    language: 'uk'
+                };
+                
+                return JSON.parse(localStorage.getItem(`settings_${this.currentUser.id}`) || '{}');
+            }
+
+            saveSettings() {
+                if (!this.currentUser) return;
+                localStorage.setItem(`settings_${this.currentUser.id}`, JSON.stringify(this.settings));
+            }
+        }
+
+        // Initialize Account Manager
+        const accountManager = new AccountManager();
+
+        // Add some sample data for demonstration
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add sample orders if none exist
+            if (accountManager.currentUser && accountManager.orders.length === 0) {
+                const sampleOrders = [
+                    {
+                        id: 1001,
+                        userId: accountManager.currentUser.id,
+                        date: new Date(Date.now() - 86400000 * 5).toISOString(),
+                        status: 'delivered',
+                        total: 1898,
+                        deliveryMethod: 'nova-poshta',
+                        branch: 'Відділення №1',
+                        trackingNumber: '20400000000001',
+                        items: [
+                            { id: 1, name: 'Vaporesso XROS 3', price: 899, quantity: 1 },
+                            { id: 2, name: 'Salt Nic Liquid', price: 199, quantity: 2 }
+                        ]
+                    },
+                    {
+                        id: 1002,
+                        userId: accountManager.currentUser.id,
+                        date: new Date(Date.now() - 86400000 * 2).toISOString(),
+                        status: 'shipped',
+                        total: 1299,
+                        deliveryMethod: 'nova-poshta',
+                        branch: 'Відділення №2',
+                        trackingNumber: '20400000000002',
+                        items: [
+                            { id: 3, name: 'GeekVape Aegis Boost', price: 1299, quantity: 1 }
+                        ]
+                    }
+                ];
+                
+                accountManager.orders = sampleOrders;
+                accountManager.saveOrders();
+                accountManager.loadOrders();
+            }
+
+            // Add sample wishlist items
+            if (accountManager.currentUser && accountManager.wishlist.length === 0) {
+                accountManager.wishlist = [1, 3, 5];
+                accountManager.saveWishlist();
+                accountManager.loadWishlist();
+            }
+
+            // Add sample loyalty points
+            if (accountManager.currentUser && accountManager.loyaltyPoints === 0) {
+                accountManager.loyaltyPoints = 750;
+                accountManager.saveLoyaltyPoints();
+                accountManager.loadLoyaltyInfo();
+            }
+
+            // Add sample addresses
+            if (accountManager.currentUser && accountManager.addresses.length === 0) {
+                const sampleAddresses = [
+                    {
+                        id: Date.now(),
+                        type: 'home',
+                        city: 'Київ',
+                        branch: '1',
+                        recipient: accountManager.currentUser.name,
+                        isDefault: true
+                    },
+                    {
+                        id: Date.now() + 1,
+                        type: 'work',
+                        city: 'Київ',
+                        branch: '25',
+                        recipient: accountManager.currentUser.name,
+                        isDefault: false
+                    }
+                ];
+                
+                accountManager.addresses = sampleAddresses;
+                accountManager.saveAddresses();
+                accountManager.loadAddresses();
+            }
+        });
+    </script>
+</body>
+</html>

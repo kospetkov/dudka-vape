@@ -1,0 +1,12 @@
+ЁЯФН Testing parser on: https://dartvaper.ua/catalog/vape-startovye-nabory/brand-vaporesso
+file:///D:/DUDKA/vape-shop/server/test-parser.js:52
+console.log('\n\n=== FULL HTML ===\n', products[0].outerHTML);
+                                       ^
+
+ReferenceError: products is not defined
+    at file:///D:/DUDKA/vape-shop/server/test-parser.js:52:40
+    at ModuleJob.run (node:internal/modules/esm/module_job:329:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async importModuleDynamicallyWrapper (node:internal/vm/module:436:15)
+
+Node.js v22.17.1
