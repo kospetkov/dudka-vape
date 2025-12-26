@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import ProductCard from '../components/UI/ProductCard';
 import api from '../utils/api';
 import './Account.css';
@@ -8,6 +9,7 @@ import './Account.css';
 const Account = () => {
     const navigate = useNavigate();
     const { user, isAuthenticated, logout } = useAuth();
+    const { isDark, toggleTheme } = useTheme();
     const [activeSection, setActiveSection] = useState('profile');
     const [loading, setLoading] = useState(false);
     const [orders, setOrders] = useState([]);
@@ -15,10 +17,9 @@ const Account = () => {
     const [addresses, setAddresses] = useState([]);
     const [loyalty, setLoyalty] = useState({ points: 150, tier: 'bronze', progress: 30 });
     const [profileForm, setProfileForm] = useState({ name: '', email: '', phone: '' });
-    const [settings, setSettings] = useState({ 
-        emailNotifications: true, 
-        smsNotifications: false,
-        darkTheme: false 
+    const [settings, setSettings] = useState({
+        emailNotifications: true,
+        smsNotifications: false
     });
 
     useEffect(() => {
@@ -28,15 +29,6 @@ const Account = () => {
     useEffect(() => {
         if (user) setProfileForm({ name: user.name || '', email: user.email || '', phone: user.phone || '' });
     }, [user]);
-
-    // Load theme preference
-    useEffect(() => {
-        const savedTheme = localStorage.getItem('dudka-theme');
-        if (savedTheme === 'dark') {
-            setSettings(s => ({ ...s, darkTheme: true }));
-            document.documentElement.setAttribute('data-theme', 'dark');
-        }
-    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -59,19 +51,6 @@ const Account = () => {
     const handleProfileSubmit = async (e) => {
         e.preventDefault();
         try { await api.put('/auth/profile', profileForm); alert('Профіль оновлено!'); } catch (e) { console.error(e); }
-    };
-
-    const toggleDarkTheme = () => {
-        const newDark = !settings.darkTheme;
-        setSettings({ ...settings, darkTheme: newDark });
-        
-        if (newDark) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('dudka-theme', 'dark');
-        } else {
-            document.documentElement.removeAttribute('data-theme');
-            localStorage.setItem('dudka-theme', 'light');
-        }
     };
 
     const navItems = [
@@ -238,9 +217,9 @@ const Account = () => {
                                         <div className="settings-item-label">🌙 Темна тема</div>
                                         <div className="settings-item-description">Переключитися на темний режим інтерфейсу</div>
                                     </div>
-                                    <div 
-                                        className={`toggle-switch ${settings.darkTheme ? 'active' : ''}`} 
-                                        onClick={toggleDarkTheme}
+                                    <div
+                                        className={`toggle-switch ${isDark ? 'active' : ''}`}
+                                        onClick={toggleTheme}
                                     ></div>
                                 </div>
                             </div>

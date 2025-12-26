@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 // UI Components
 import Header from './components/UI/Header';
@@ -56,14 +57,15 @@ const AppLayout = ({ children }) => {
 function App() {
     return (
         <BrowserRouter>
-            <AuthProvider>
-                <CartProvider>
-                    <WishlistProvider>
-                        <AppLayout>
-                            <Routes>
-                                <Route path="/" element={<Home />} />
-                                <Route path="/product/:id" element={<ProductPage />} />
-                                <Route path="/about" element={<About />} />
+            <ThemeProvider>
+                <AuthProvider>
+                    <CartProvider>
+                        <WishlistProvider>
+                            <AppLayout>
+                                <Routes>
+                                    <Route path="/" element={<Home />} />
+                                    <Route path="/product/:id" element={<ProductPage />} />
+                                    <Route path="/about" element={<About />} />
                                 
                                 <Route
                                     path="/account"
@@ -129,6 +131,7 @@ function App() {
                     </WishlistProvider>
                 </CartProvider>
             </AuthProvider>
+            </ThemeProvider>
         </BrowserRouter>
     );
 }
