@@ -58,7 +58,7 @@ const ProductCard = ({
 
     const handleWishlistClick = (e) => {
         e.stopPropagation();
-        onWishlistToggle?.(productId);
+        onWishlistToggle?.(product); // Pass full product, not just ID
     };
 
     const handleQuickView = (e) => {

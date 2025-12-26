@@ -2,18 +2,18 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import './Footer.css';
 
-// PLACEHOLDER SOCIAL MEDIA LINKS - Replace with your actual URLs
+// DUDKA Social Media Links
 const SOCIAL_LINKS = {
-    instagram: 'https://instagram.com/vapeshop',  // ← Replace with your Instagram
-    telegram: 'https://t.me/vapeshop',           // ← Replace with your Telegram
-    tiktok: 'https://tiktok.com/@vapeshop',      // ← Replace with your TikTok
-    youtube: 'https://youtube.com/@vapeshop'     // ← Replace with your YouTube
+    instagram: 'https://instagram.com/dudkavape',
+    telegram: 'https://t.me/dudkavape',
+    tiktok: 'https://tiktok.com/@dudkavape',
+    youtube: 'https://youtube.com/@dudkavape'
 };
 
-// PLACEHOLDER CONTACT INFO - Replace with your actual contact details
+// DUDKA Contact Info
 const CONTACT_INFO = {
-    email: 'info@vapeshop.ua',        // ← Replace with your email
-    phone: '+380 (xx) xxx-xx-xx'      // ← Replace with your phone
+    email: 'info@dudka.ua',
+    phone: '+380 (50) 123-45-67'
 };
 
 const Footer = () => {
@@ -23,66 +23,62 @@ const Footer = () => {
         <footer className="footer">
             <div className="container">
                 <div className="footer-grid">
-                    {/* Products Section */}
+                    {/* Brand Section */}
                     <div className="footer-section">
-                        <h4 className="footer-title">{t('footer.products')}</h4>
-                        <ul className="footer-links">
-                            <li><Link to="/catalog?category=pod-systems">{t('footer.podSystems')}</Link></li>
-                            <li><Link to="/catalog?category=starter-kits">{t('footer.starterKits')}</Link></li>
-                            <li><Link to="/catalog?category=liquids">{t('footer.liquids')}</Link></li>
-                            <li><Link to="/catalog?category=accessories">{t('footer.accessories')}</Link></li>
-                            <li><Link to="/catalog?category=disposables">{t('footer.disposables')}</Link></li>
-                        </ul>
+                        <div className="footer-brand">
+                            <img src="/logo.png" alt="DUDKA" className="footer-logo" />
+                        </div>
+                        <p className="footer-description">
+                            Преміум вейп продукція для справжніх цінителів. 
+                            Якість та надійність у кожному пристрої.
+                        </p>
                     </div>
 
-                    {/* Services Section */}
+                    {/* Products Section */}
                     <div className="footer-section">
-                        <h4 className="footer-title">{t('footer.services')}</h4>
+                        <h4 className="footer-title">{t('footer.products', 'Продукція')}</h4>
                         <ul className="footer-links">
-                            <li><Link to="/warranty">{t('footer.warranty')}</Link></li>
-                            <li><Link to="/delivery">{t('footer.delivery')}</Link></li>
-                            <li><Link to="/trade-in">{t('footer.tradeIn')}</Link></li>
-                            <li><Link to="/repair">{t('footer.repair')}</Link></li>
+                            <li><Link to="/catalog?category=pod-systems">{t('footer.podSystems', 'Pod-системи')}</Link></li>
+                            <li><Link to="/catalog?category=starter-kits">{t('footer.starterKits', 'Стартові набори')}</Link></li>
+                            <li><Link to="/catalog?category=liquids">{t('footer.liquids', 'Рідини')}</Link></li>
+                            <li><Link to="/catalog?category=accessories">{t('footer.accessories', 'Аксесуари')}</Link></li>
+                            <li><Link to="/catalog?category=disposables">{t('footer.disposables', 'Одноразові')}</Link></li>
                         </ul>
                     </div>
 
                     {/* Information Section */}
                     <div className="footer-section">
-                        <h4 className="footer-title">{t('footer.information')}</h4>
+                        <h4 className="footer-title">{t('footer.information', 'Інформація')}</h4>
                         <ul className="footer-links">
-                            <li><Link to="/about">{t('footer.aboutUs')}</Link></li>
-                            <li><Link to="/blog">{t('footer.blog')}</Link></li>
-                            <li><Link to="/contacts">{t('footer.contacts')}</Link></li>
-                            <li><Link to="/privacy">{t('footer.privacy')}</Link></li>
+                            <li><Link to="/about">{t('footer.aboutUs', 'Про нас')}</Link></li>
+                            <li><Link to="/delivery">{t('footer.delivery', 'Доставка')}</Link></li>
+                            <li><Link to="/contact">{t('footer.contacts', 'Контакти')}</Link></li>
+                            <li><Link to="/privacy">Політика конфіденційності</Link></li>
+                            <li><Link to="/terms">Умови використання</Link></li>
+                            <li><Link to="/offer">Публічна оферта</Link></li>
                         </ul>
                     </div>
 
                     {/* Contact Section */}
                     <div className="footer-section">
-                        <h4 className="footer-title">{t('footer.contactUs')}</h4>
+                        <h4 className="footer-title">{t('footer.contactUs', 'Контакти')}</h4>
                         <ul className="footer-contact">
                             <li>
-                                <strong>{t('footer.email')}:</strong>
-                                <br />
+                                <strong>Email:</strong>
                                 <a href={`mailto:${CONTACT_INFO.email}`}>{CONTACT_INFO.email}</a>
                             </li>
                             <li>
-                                <strong>{t('footer.phone')}:</strong>
-                                <br />
+                                <strong>Телефон:</strong>
                                 <a href={`tel:${CONTACT_INFO.phone.replace(/[^0-9+]/g, '')}`}>{CONTACT_INFO.phone}</a>
                             </li>
                             <li>
-                                <strong>{t('footer.workHours')}:</strong>
-                                <br />
-                                {t('footer.workHoursValue')}
+                                <strong>Графік роботи:</strong>
+                                <span>Пн-Пт: 9:00-18:00, Сб: 10:00-15:00</span>
                             </li>
                         </ul>
-                    </div>
-
-                    {/* Social Media Section */}
-                    <div className="footer-section">
-                        <h4 className="footer-title">{t('footer.socialMedia')}</h4>
-                        <p className="footer-social-text">{t('footer.followUs')}</p>
+                        
+                        {/* Social Media */}
+                        <h4 className="footer-title" style={{ marginTop: '1.5rem' }}>Ми в соцмережах</h4>
                         <div className="footer-social">
                             <a
                                 href={SOCIAL_LINKS.instagram}
@@ -134,7 +130,14 @@ const Footer = () => {
 
                 {/* Copyright */}
                 <div className="footer-bottom">
-                    <p className="text-muted text-small">{t('footer.copyright')}</p>
+                    <p>© 2026 DUDKA. Всі права захищено.</p>
+                    <p className="footer-legal-links">
+                        <Link to="/privacy">Конфіденційність</Link>
+                        <span>•</span>
+                        <Link to="/terms">Умови</Link>
+                        <span>•</span>
+                        <Link to="/offer">Оферта</Link>
+                    </p>
                 </div>
             </div>
         </footer>

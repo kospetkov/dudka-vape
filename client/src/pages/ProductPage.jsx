@@ -219,7 +219,10 @@ const ProductPage = () => {
                     </div>
 
                     {/* Description */}
-                    <p className="product-description">{getProductDescription()}</p>
+                    <div 
+                        className="product-description"
+                        dangerouslySetInnerHTML={{ __html: getProductDescription() }}
+                    />
 
                     {/* Variants */}
                     <div className="variant-section">
@@ -379,7 +382,10 @@ const ProductPage = () => {
                 <div className="product-tab-content">
                     {activeTab === 'description' && (
                         <div>
-                            <p>{getProductDescription()}</p>
+                            <div 
+                                className="tab-description-content"
+                                dangerouslySetInnerHTML={{ __html: getProductDescription() }}
+                            />
                             {product.application && (
                                 <div style={{ marginTop: 'var(--spacing-lg)' }}>
                                     <h4>Застосування:</h4>

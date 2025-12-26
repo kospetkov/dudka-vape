@@ -39,7 +39,11 @@ const userSchema = new mongoose.Schema({
         },
         // Placeholder for future LiqPay integration
         cardLast4: String
-    }
+    },
+    wishlist: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+    }]
 }, {
     timestamps: true
 });

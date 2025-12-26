@@ -17,6 +17,8 @@ import uploadRoutes from './routes/upload.js';
 import uploadLocalRoutes from './routes/uploadLocal.js';
 import paymentRoutes from './routes/payment.js';
 import deliveryRoutes from './routes/delivery.js';
+import wishlistRoutes from './routes/wishlist.js';
+import contactRoutes from './routes/contact.js';
 import settingsRoutes from './routes/settings.js';
 
 // Load environment variables
@@ -50,6 +52,8 @@ app.use('/api/upload', uploadRoutes);           // Cloudinary uploads
 app.use('/api/upload-local', uploadLocalRoutes); // Local file uploads
 app.use('/api/payment', paymentRoutes);          // LiqPay integration
 app.use('/api/delivery', deliveryRoutes);        // Nova Poshta integration
+app.use('/api/wishlist', wishlistRoutes);        // Wishlist functionality
+app.use('/api/contact', contactRoutes);          // Contact form
 app.use('/api/settings', settingsRoutes);        // Store settings
 
 // Manual parser trigger (for testing)

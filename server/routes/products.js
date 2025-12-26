@@ -5,6 +5,25 @@ import { admin } from '../middleware/admin.js';
 
 const router = express.Router();
 
+// @route   POST /api/products/fix-stock
+// @desc    Fix all products stock to 10 (temporary fix)
+// @access  Public (for debugging)
+router.post('/fix-stock', async (req, res) => {
+    try {
+        const result = await Product.updateMany(
+            {}, // all products
+            { $set: { stock: 10, inStock: true } }
+        );
+        res.json({ 
+            success: true, 
+            message: `Updated ${result.modifiedCount} products`,
+            modifiedCount: result.modifiedCount
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // @route   GET /api/products
 // @desc    Get all products with filtering
 // @access  Public
@@ -21,16 +40,10 @@ router.get('/', async (req, res) => {
             limit = 12
         } = req.query;
 
-        // Build filter object
         const filter = { active: true };
 
-        if (category) {
-            filter.category = category;
-        }
-
-        if (brand) {
-            filter.brand = brand;
-        }
+        if (category) filter.category = category;
+        if (brand) filter.brand = brand;
 
         if (minPrice || maxPrice) {
             filter.price = {};
@@ -47,11 +60,8 @@ router.get('/', async (req, res) => {
             ];
         }
 
-        if (featured === 'true') {
-            filter.featured = true;
-        }
+        if (featured === 'true') filter.featured = true;
 
-        // Execute query with pagination
         const products = await Product.find(filter)
             .populate('category')
             .limit(limit * 1)
@@ -84,11 +94,21 @@ router.get('/brands', async (req, res) => {
 });
 
 // @route   GET /api/products/:id
-// @desc    Get product by ID
+// @desc    Get product by ID or slug
 // @access  Public
 router.get('/:id', async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id).populate('category');
+        let product;
+        
+        // Try by ID first
+        if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+            product = await Product.findById(req.params.id).populate('category');
+        }
+        
+        // If not found, try by slug
+        if (!product) {
+            product = await Product.findOne({ slug: req.params.id }).populate('category');
+        }
 
         if (product) {
             res.json(product);

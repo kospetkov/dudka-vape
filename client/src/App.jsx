@@ -9,9 +9,15 @@ import FloatingCart from './components/UI/FloatingCart';
 
 // Pages
 import Home from './pages/Home';
+import Catalog from './pages/Catalog';
 import ProductPage from './pages/ProductPage';
 import Account from './pages/Account';
+import Wishlist from './pages/Wishlist';
 import About from './pages/About';
+import Contact from './pages/Contact';
+
+// Legal Pages
+import { PrivacyPolicy, TermsOfService, PublicOffer } from './pages/Legal';
 
 // Admin Pages
 import AdminDashboard from './pages/Admin/AdminDashboard';
@@ -20,6 +26,7 @@ import CategoryManagement from './pages/Admin/CategoryManagement';
 import UserManagement from './pages/Admin/UserManagement';
 import OrderManagement from './pages/Admin/OrderManagement';
 import StoreSettings from './pages/Admin/StoreSettings';
+import ContactMessages from './pages/Admin/ContactMessages';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, adminOnly = false }) => {
@@ -44,7 +51,7 @@ const AppLayout = ({ children }) => {
 
     return (
         <div className="app">
-            <Header storeName="DudkaVape" />
+            <Header storeName="DUDKA" logoUrl="/logo.png" />
             <main className="main-content">
                 {children}
             </main>
@@ -57,14 +64,22 @@ function App() {
     return (
         <BrowserRouter>
             <AuthProvider>
-                <CartProvider>
-                    <WishlistProvider>
+                <WishlistProvider>
+                    <CartProvider>
                         <AppLayout>
                             <Routes>
                                 <Route path="/" element={<Home />} />
+                                <Route path="/catalog" element={<Catalog />} />
                                 <Route path="/product/:id" element={<ProductPage />} />
+
+                                {/* Legal Pages */}
+                                <Route path="/privacy" element={<PrivacyPolicy />} />
+                                <Route path="/terms" element={<TermsOfService />} />
+                                <Route path="/offer" element={<PublicOffer />} />
+                                <Route path="/wishlist" element={<Wishlist />} />
                                 <Route path="/about" element={<About />} />
-                                
+                                <Route path="/contact" element={<Contact />} />
+
                                 <Route
                                     path="/account"
                                     element={
@@ -122,12 +137,20 @@ function App() {
                                         </ProtectedRoute>
                                     }
                                 />
+                                <Route
+                                    path="/admin/messages"
+                                    element={
+                                        <ProtectedRoute adminOnly>
+                                            <ContactMessages />
+                                        </ProtectedRoute>
+                                    }
+                                />
 
                                 <Route path="*" element={<Navigate to="/" replace />} />
                             </Routes>
                         </AppLayout>
-                    </WishlistProvider>
-                </CartProvider>
+                    </CartProvider>
+                </WishlistProvider>
             </AuthProvider>
         </BrowserRouter>
     );

@@ -15,11 +15,22 @@ const Account = () => {
     const [addresses, setAddresses] = useState([]);
     const [loyalty, setLoyalty] = useState({ points: 150, tier: 'bronze', progress: 30 });
     const [profileForm, setProfileForm] = useState({ name: '', email: '', phone: '' });
-    const [settings, setSettings] = useState({ 
-        emailNotifications: true, 
-        smsNotifications: false,
-        darkTheme: false 
+    const [settings, setSettings] = useState({ emailNotifications: true, smsNotifications: false });
+    const [darkTheme, setDarkTheme] = useState(() => {
+        return localStorage.getItem('dudka-theme') === 'dark';
     });
+
+    const toggleDarkTheme = () => {
+        const newValue = !darkTheme;
+        setDarkTheme(newValue);
+        if (newValue) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('dudka-theme', 'dark');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.removeItem('dudka-theme');
+        }
+    };
 
     useEffect(() => {
         if (!isAuthenticated) navigate('/');
@@ -28,15 +39,6 @@ const Account = () => {
     useEffect(() => {
         if (user) setProfileForm({ name: user.name || '', email: user.email || '', phone: user.phone || '' });
     }, [user]);
-
-    // Load theme preference
-    useEffect(() => {
-        const savedTheme = localStorage.getItem('dudka-theme');
-        if (savedTheme === 'dark') {
-            setSettings(s => ({ ...s, darkTheme: true }));
-            document.documentElement.setAttribute('data-theme', 'dark');
-        }
-    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -59,19 +61,6 @@ const Account = () => {
     const handleProfileSubmit = async (e) => {
         e.preventDefault();
         try { await api.put('/auth/profile', profileForm); alert('Профіль оновлено!'); } catch (e) { console.error(e); }
-    };
-
-    const toggleDarkTheme = () => {
-        const newDark = !settings.darkTheme;
-        setSettings({ ...settings, darkTheme: newDark });
-        
-        if (newDark) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('dudka-theme', 'dark');
-        } else {
-            document.documentElement.removeAttribute('data-theme');
-            localStorage.setItem('dudka-theme', 'light');
-        }
     };
 
     const navItems = [
@@ -229,42 +218,24 @@ const Account = () => {
                     {activeSection === 'settings' && (
                         <section className="account-section">
                             <div className="account-section-header"><h2 className="account-section-title">Налаштування</h2></div>
-                            
-                            {/* Theme Settings */}
                             <div className="settings-group">
                                 <div className="settings-group-title">Зовнішній вигляд</div>
                                 <div className="settings-item">
-                                    <div className="settings-item-info">
-                                        <div className="settings-item-label">🌙 Темна тема</div>
-                                        <div className="settings-item-description">Переключитися на темний режим інтерфейсу</div>
-                                    </div>
-                                    <div 
-                                        className={`toggle-switch ${settings.darkTheme ? 'active' : ''}`} 
-                                        onClick={toggleDarkTheme}
-                                    ></div>
+                                    <div className="settings-item-info"><div className="settings-item-label">Темна тема</div><div className="settings-item-description">Перемкнути на темний режим інтерфейсу</div></div>
+                                    <div className={`toggle-switch ${darkTheme ? 'active' : ''}`} onClick={toggleDarkTheme}></div>
                                 </div>
                             </div>
-
-                            {/* Notification Settings */}
                             <div className="settings-group">
                                 <div className="settings-group-title">Сповіщення</div>
                                 <div className="settings-item">
-                                    <div className="settings-item-info">
-                                        <div className="settings-item-label">Email сповіщення</div>
-                                        <div className="settings-item-description">Отримувати новини та акції на email</div>
-                                    </div>
+                                    <div className="settings-item-info"><div className="settings-item-label">Email сповіщення</div><div className="settings-item-description">Отримувати новини та акції на email</div></div>
                                     <div className={`toggle-switch ${settings.emailNotifications ? 'active' : ''}`} onClick={() => setSettings({ ...settings, emailNotifications: !settings.emailNotifications })}></div>
                                 </div>
                                 <div className="settings-item">
-                                    <div className="settings-item-info">
-                                        <div className="settings-item-label">SMS сповіщення</div>
-                                        <div className="settings-item-description">Отримувати SMS про статус замовлення</div>
-                                    </div>
+                                    <div className="settings-item-info"><div className="settings-item-label">SMS сповіщення</div><div className="settings-item-description">Отримувати SMS про статус замовлення</div></div>
                                     <div className={`toggle-switch ${settings.smsNotifications ? 'active' : ''}`} onClick={() => setSettings({ ...settings, smsNotifications: !settings.smsNotifications })}></div>
                                 </div>
                             </div>
-
-                            {/* Danger Zone */}
                             <div className="settings-group">
                                 <div className="settings-group-title">Небезпечна зона</div>
                                 <button className="btn" style={{ background: 'var(--color-error)', color: 'white' }}>Видалити акаунт</button>

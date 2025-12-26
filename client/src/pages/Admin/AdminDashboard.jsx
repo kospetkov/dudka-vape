@@ -55,21 +55,29 @@ const AdminDashboard = () => {
             </div>
 
             <div className="grid grid-2">
-                <Link to="/admin/products" className="card">
-                    <h3>{t('admin.products')}</h3>
+                <Link to="/admin/products" className="card" style={{ textDecoration: 'none' }}>
+                    <h3>📦 {"Товари"}</h3>
                     <p className="text-muted">Управління товарами</p>
                 </Link>
-                <Link to="/admin/categories" className="card">
-                    <h3>{t('admin.categories')}</h3>
+                <Link to="/admin/categories" className="card" style={{ textDecoration: 'none' }}>
+                    <h3>🎯 {"Категорії"}</h3>
                     <p className="text-muted">Управління категоріями</p>
                 </Link>
-                <Link to="/admin/orders" className="card">
-                    <h3>{t('admin.orders')}</h3>
+                <Link to="/admin/orders" className="card" style={{ textDecoration: 'none' }}>
+                    <h3>📄 {"Замовлення"}</h3>
                     <p className="text-muted">Управління замовленнями</p>
                 </Link>
-                <Link to="/admin/users" className="card">
-                    <h3>{t('admin.users')}</h3>
+                <Link to="/admin/users" className="card" style={{ textDecoration: 'none' }}>
+                    <h3>👥 {"Користувачі"}</h3>
                     <p className="text-muted">Управління користувачами</p>
+                </Link>
+                <Link to="/admin/messages" className="card" style={{ textDecoration: 'none' }}>
+                    <h3>📬 {"Повідомлення"}</h3>
+                    <p className="text-muted">Звернення з форми контактів</p>
+                </Link>
+                <Link to="/admin/settings" className="card" style={{ textDecoration: 'none', gridColumn: '1 / -1' }}>
+                    <h3>⚙️ {"Налаштування магазину"}</h3>
+                    <p className="text-muted">Логотип, назва, промо-блоки, контакти</p>
                 </Link>
             </div>
         </div>
