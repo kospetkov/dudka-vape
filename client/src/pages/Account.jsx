@@ -17,18 +17,30 @@ const Account = () => {
     const [profileForm, setProfileForm] = useState({ name: '', email: '', phone: '' });
     const [settings, setSettings] = useState({ emailNotifications: true, smsNotifications: false });
     const [darkTheme, setDarkTheme] = useState(() => {
+        // По умолчанию СВЕТЛАЯ тема, тёмная только если явно выбрана
         return localStorage.getItem('dudka-theme') === 'dark';
     });
+
+    // Применяем тему при загрузке (светлая по умолчанию)
+    useEffect(() => {
+        if (localStorage.getItem('dudka-theme') === 'dark') {
+            document.documentElement.removeAttribute('data-theme');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    }, []);
 
     const toggleDarkTheme = () => {
         const newValue = !darkTheme;
         setDarkTheme(newValue);
         if (newValue) {
-            document.documentElement.setAttribute('data-theme', 'dark');
+            // Тёмная тема - убираем атрибут (CSS default)
+            document.documentElement.removeAttribute('data-theme');
             localStorage.setItem('dudka-theme', 'dark');
         } else {
-            document.documentElement.removeAttribute('data-theme');
-            localStorage.removeItem('dudka-theme');
+            // Светлая тема
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('dudka-theme', 'light');
         }
     };
 

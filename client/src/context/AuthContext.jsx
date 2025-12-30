@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useRef } from 'react';
 import api from '../utils/api';
 import { getToken, saveToken, getUser, saveUser, clearAuth } from '../utils/localStorage';
 
@@ -16,22 +16,31 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(getUser());
     const [token, setToken] = useState(getToken());
     const [loading, setLoading] = useState(false);
+    const [initializing, setInitializing] = useState(true);
+    const isLoggingIn = useRef(false);
 
     useEffect(() => {
-        if (token) {
-            // Verify token is still valid
-            api.get('/auth/profile')
-                .then(response => {
+        const verifyToken = async () => {
+            if (token && !isLoggingIn.current) {
+                try {
+                    const response = await api.get('/auth/profile');
                     setUser(response.data);
                     saveUser(response.data);
-                })
-                .catch(() => {
-                    logout();
-                });
-        }
+                } catch (error) {
+                    // Токен невалидный — очищаем только если не в процессе логина
+                    if (!isLoggingIn.current) {
+                        logout();
+                    }
+                }
+            }
+            setInitializing(false);
+        };
+
+        verifyToken();
     }, []);
 
     const login = async (email, password) => {
+        isLoggingIn.current = true;
         setLoading(true);
         try {
             const response = await api.post('/auth/login', { email, password });
@@ -50,10 +59,12 @@ export const AuthProvider = ({ children }) => {
             };
         } finally {
             setLoading(false);
+            isLoggingIn.current = false;
         }
     };
 
     const register = async (userData) => {
+        isLoggingIn.current = true;
         setLoading(true);
         try {
             const response = await api.post('/auth/register', userData);
@@ -72,6 +83,7 @@ export const AuthProvider = ({ children }) => {
             };
         } finally {
             setLoading(false);
+            isLoggingIn.current = false;
         }
     };
 
@@ -109,6 +121,7 @@ export const AuthProvider = ({ children }) => {
         user,
         token,
         loading,
+        initializing,
         isAuthenticated: !!token,
         isAdmin: user?.role === 'admin',
         login,
