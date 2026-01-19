@@ -20,7 +20,7 @@ const StoreSettings = () => {
         heroSliderEnabled: false,
         heroSlider: []
     });
-    
+
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [message, setMessage] = useState({ type: '', text: '' });
@@ -110,7 +110,7 @@ const StoreSettings = () => {
     const handleSave = async () => {
         setSaving(true);
         setMessage({ type: '', text: '' });
-        
+
         try {
             await api.put('/settings', settings);
             setMessage({ type: 'success', text: 'Налаштування збережено!' });
@@ -227,7 +227,7 @@ const StoreSettings = () => {
         <div className="admin-page">
             <div className="admin-header">
                 <h1>⚙️ Налаштування магазину</h1>
-                <button 
+                <button
                     className="btn btn-primary"
                     onClick={handleSave}
                     disabled={saving}
@@ -246,7 +246,7 @@ const StoreSettings = () => {
                 {/* Basic Info */}
                 <section className="admin-section">
                     <h2>📋 Основна інформація</h2>
-                    
+
                     <div className="admin-form-group">
                         <label>Назва магазину</label>
                         <input
@@ -271,9 +271,9 @@ const StoreSettings = () => {
                         <label>Логотип</label>
                         <div className="logo-upload-container">
                             {settings.logoUrl && (
-                                <img 
-                                    src={settings.logoUrl} 
-                                    alt="Logo" 
+                                <img
+                                    src={settings.logoUrl}
+                                    alt="Logo"
                                     className="logo-preview"
                                 />
                             )}
@@ -296,7 +296,7 @@ const StoreSettings = () => {
                 {/* Contact Info */}
                 <section className="admin-section">
                     <h2>📞 Контактна інформація</h2>
-                    
+
                     <div className="admin-form-group">
                         <label>Email адреси</label>
                         {settings.contactEmails.map((email, index) => (
@@ -308,7 +308,7 @@ const StoreSettings = () => {
                                     placeholder="info@dudka.ua"
                                 />
                                 {settings.contactEmails.length > 1 && (
-                                    <button 
+                                    <button
                                         type="button"
                                         className="btn btn-danger btn-sm"
                                         onClick={() => removeEmail(index)}
@@ -318,7 +318,7 @@ const StoreSettings = () => {
                                 )}
                             </div>
                         ))}
-                        <button 
+                        <button
                             type="button"
                             className="btn btn-secondary btn-sm"
                             onClick={addEmail}
@@ -338,7 +338,7 @@ const StoreSettings = () => {
                                     placeholder="+380 (50) 123-45-67"
                                 />
                                 {settings.contactPhones.length > 1 && (
-                                    <button 
+                                    <button
                                         type="button"
                                         className="btn btn-danger btn-sm"
                                         onClick={() => removePhone(index)}
@@ -348,7 +348,7 @@ const StoreSettings = () => {
                                 )}
                             </div>
                         ))}
-                        <button 
+                        <button
                             type="button"
                             className="btn btn-secondary btn-sm"
                             onClick={addPhone}
@@ -356,12 +356,92 @@ const StoreSettings = () => {
                             ➕ Додати телефон
                         </button>
                     </div>
+
+                    <div className="admin-form-group">
+                        <label>📍 Адреса</label>
+                        <input
+                            type="text"
+                            value={settings.address || ''}
+                            onChange={(e) => handleChange('address', e.target.value)}
+                            placeholder="м. Київ, вул. Хрещатик 1"
+                        />
+                    </div>
+                </section>
+
+                {/* Social Links */}
+                <section className="admin-section">
+                    <h2>🔗 Соціальні мережі</h2>
+
+                    <div className="admin-form-group">
+                        <label>📸 Instagram</label>
+                        <input
+                            type="url"
+                            value={settings.socialLinks?.instagram || ''}
+                            onChange={(e) => setSettings(prev => ({
+                                ...prev,
+                                socialLinks: { ...prev.socialLinks, instagram: e.target.value }
+                            }))}
+                            placeholder="https://instagram.com/dudka.vape"
+                        />
+                    </div>
+
+                    <div className="admin-form-group">
+                        <label>✈️ Telegram</label>
+                        <input
+                            type="url"
+                            value={settings.socialLinks?.telegram || ''}
+                            onChange={(e) => setSettings(prev => ({
+                                ...prev,
+                                socialLinks: { ...prev.socialLinks, telegram: e.target.value }
+                            }))}
+                            placeholder="https://t.me/dudka_vape"
+                        />
+                    </div>
+
+                    <div className="admin-form-group">
+                        <label>🎵 TikTok</label>
+                        <input
+                            type="url"
+                            value={settings.socialLinks?.tiktok || ''}
+                            onChange={(e) => setSettings(prev => ({
+                                ...prev,
+                                socialLinks: { ...prev.socialLinks, tiktok: e.target.value }
+                            }))}
+                            placeholder="https://tiktok.com/@dudka.vape"
+                        />
+                    </div>
+
+                    <div className="admin-form-group">
+                        <label>▶️ YouTube</label>
+                        <input
+                            type="url"
+                            value={settings.socialLinks?.youtube || ''}
+                            onChange={(e) => setSettings(prev => ({
+                                ...prev,
+                                socialLinks: { ...prev.socialLinks, youtube: e.target.value }
+                            }))}
+                            placeholder="https://youtube.com/@dudka"
+                        />
+                    </div>
+
+                    <div className="admin-form-group">
+                        <label>👍 Facebook</label>
+                        <input
+                            type="url"
+                            value={settings.socialLinks?.facebook || ''}
+                            onChange={(e) => setSettings(prev => ({
+                                ...prev,
+                                socialLinks: { ...prev.socialLinks, facebook: e.target.value }
+                            }))}
+                            placeholder="https://facebook.com/dudka.vape"
+                        />
+                    </div>
                 </section>
 
                 {/* Working Hours */}
                 <section className="admin-section">
                     <h2>🕐 Час роботи</h2>
-                    
+
                     <div className="admin-form-group">
                         <label>Пн-Пт</label>
                         <input
@@ -396,7 +476,7 @@ const StoreSettings = () => {
                 {/* Hero Section */}
                 <section className="admin-section">
                     <h2>🎯 Hero секція (статична)</h2>
-                    
+
                     <div className="admin-form-group">
                         <label className="toggle-label">
                             <input
@@ -409,7 +489,7 @@ const StoreSettings = () => {
                             </span>
                         </label>
                     </div>
-                    
+
                     <div className="admin-form-group">
                         <label>Заголовок</label>
                         <input
@@ -434,7 +514,7 @@ const StoreSettings = () => {
                 {/* Hero Slider */}
                 <section className="admin-section">
                     <h2>🖼️ Промо слайдер</h2>
-                    
+
                     <div className="admin-form-group">
                         <label className="toggle-label">
                             <input
@@ -447,8 +527,8 @@ const StoreSettings = () => {
                             </span>
                         </label>
                         <p className="admin-hint">
-                            {settings.heroSliderEnabled 
-                                ? 'Слайдер відображається замість статичного hero' 
+                            {settings.heroSliderEnabled
+                                ? 'Слайдер відображається замість статичного hero'
                                 : 'Буде показано статичний hero блок'}
                         </p>
                     </div>
@@ -461,7 +541,7 @@ const StoreSettings = () => {
                                     {settings.heroSlider.map((slide, index) => (
                                         <div key={slide._id || slide.id || index} className="slide-item">
                                             <div className="slide-order">
-                                                <button 
+                                                <button
                                                     className="btn-order"
                                                     onClick={() => moveSlide(index, -1)}
                                                     disabled={index === 0}
@@ -469,7 +549,7 @@ const StoreSettings = () => {
                                                     ▲
                                                 </button>
                                                 <span>{index + 1}</span>
-                                                <button 
+                                                <button
                                                     className="btn-order"
                                                     onClick={() => moveSlide(index, 1)}
                                                     disabled={index === settings.heroSlider.length - 1}
@@ -482,7 +562,7 @@ const StoreSettings = () => {
                                                 <strong>{slide.title}</strong>
                                                 <span>{slide.subtitle}</span>
                                             </div>
-                                            <button 
+                                            <button
                                                 className="btn btn-danger btn-sm"
                                                 onClick={() => removeSlide(slide._id || slide.id)}
                                             >
@@ -495,7 +575,7 @@ const StoreSettings = () => {
 
                             <div className="add-slide-form">
                                 <h4>➕ Додати слайд</h4>
-                                
+
                                 <div className="admin-form-group">
                                     <label>Тег (напр. "🎁 Акція")</label>
                                     <input
@@ -567,7 +647,7 @@ const StoreSettings = () => {
                                     </div>
                                 </div>
 
-                                <button 
+                                <button
                                     className="btn btn-secondary"
                                     onClick={addSlide}
                                     disabled={!newSlide.title || !newSlide.image || loading}

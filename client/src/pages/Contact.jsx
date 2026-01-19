@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useSettings } from '../context/SettingsContext';
 import './Legal/Legal.css';
 import './Contact.css';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const Contact = () => {
+    const { storeName, contactEmails, contactPhones, address, workingHours, socialLinks } = useSettings();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -17,9 +19,9 @@ const Contact = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
-        document.title = 'Контакти | DUDKA';
+        document.title = `Контакти | ${storeName || 'Shop'}`;
         window.scrollTo(0, 0);
-    }, []);
+    }, [storeName]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -67,49 +69,84 @@ const Contact = () => {
                 <div className="contact-info-block">
                     <h2>Контактна інформація</h2>
                     
-                    <div className="contact-item">
-                        <span className="contact-icon">📍</span>
-                        <div>
-                            <strong>Адреса</strong>
-                            <p>м. Кропивницький, Україна</p>
+                    {address && (
+                        <div className="contact-item">
+                            <span className="contact-icon">📍</span>
+                            <div>
+                                <strong>Адреса</strong>
+                                <p>{address}</p>
+                            </div>
                         </div>
-                    </div>
+                    )}
 
-                    <div className="contact-item">
-                        <span className="contact-icon">🕐</span>
-                        <div>
-                            <strong>Режим роботи</strong>
-                            <p>Щодня 10:00 – 20:00</p>
+                    {workingHours && (
+                        <div className="contact-item">
+                            <span className="contact-icon">🕐</span>
+                            <div>
+                                <strong>Режим роботи</strong>
+                                {workingHours.weekdays && <p>Пн-Пт: {workingHours.weekdays}</p>}
+                                {workingHours.saturday && <p>Сб: {workingHours.saturday}</p>}
+                                {workingHours.sunday && <p>Нд: {workingHours.sunday}</p>}
+                            </div>
                         </div>
-                    </div>
+                    )}
 
-                    <div className="contact-item">
-                        <span className="contact-icon">📱</span>
-                        <div>
-                            <strong>Телефон</strong>
-                            <p><a href="tel:+380501234567">+380 (50) 123-45-67</a></p>
+                    {contactPhones?.length > 0 && (
+                        <div className="contact-item">
+                            <span className="contact-icon">📱</span>
+                            <div>
+                                <strong>Телефон{contactPhones.length > 1 ? 'и' : ''}</strong>
+                                {contactPhones.map((phone, idx) => (
+                                    phone && <p key={idx}><a href={`tel:${phone.replace(/[^0-9+]/g, '')}`}>{phone}</a></p>
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
 
-                    <div className="contact-item">
-                        <span className="contact-icon">✉️</span>
-                        <div>
-                            <strong>Email</strong>
-                            <p><a href="mailto:info@dudka.ua">info@dudka.ua</a></p>
+                    {contactEmails?.length > 0 && (
+                        <div className="contact-item">
+                            <span className="contact-icon">✉️</span>
+                            <div>
+                                <strong>Email</strong>
+                                {contactEmails.map((email, idx) => (
+                                    email && <p key={idx}><a href={`mailto:${email}`}>{email}</a></p>
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
 
-                    <div className="contact-socials">
-                        <h3>Ми в соцмережах</h3>
-                        <div className="social-links">
-                            <a href="https://instagram.com/dudkavape" target="_blank" rel="noopener noreferrer">
-                                Instagram
-                            </a>
-                            <a href="https://t.me/dudkavape" target="_blank" rel="noopener noreferrer">
-                                Telegram
-                            </a>
+                    {(socialLinks?.instagram || socialLinks?.telegram || socialLinks?.tiktok || socialLinks?.youtube || socialLinks?.facebook) && (
+                        <div className="contact-socials">
+                            <h3>Ми в соцмережах</h3>
+                            <div className="social-links">
+                                {socialLinks?.instagram && (
+                                    <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer">
+                                        Instagram
+                                    </a>
+                                )}
+                                {socialLinks?.telegram && (
+                                    <a href={socialLinks.telegram} target="_blank" rel="noopener noreferrer">
+                                        Telegram
+                                    </a>
+                                )}
+                                {socialLinks?.tiktok && (
+                                    <a href={socialLinks.tiktok} target="_blank" rel="noopener noreferrer">
+                                        TikTok
+                                    </a>
+                                )}
+                                {socialLinks?.youtube && (
+                                    <a href={socialLinks.youtube} target="_blank" rel="noopener noreferrer">
+                                        YouTube
+                                    </a>
+                                )}
+                                {socialLinks?.facebook && (
+                                    <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer">
+                                        Facebook
+                                    </a>
+                                )}
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
                 <div className="contact-form-block">

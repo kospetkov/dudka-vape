@@ -18,9 +18,9 @@ const Home = () => {
         heroSlider: [],
         heroSliderEnabled: false,
         heroEnabled: true,
-        storeName: 'DUDKA',
-        heroTitle: 'Преміум Вейп Продукція',
-        heroSubtitle: 'Відкрийте найкращий вибір e-liquid, пристроїв та аксесуарів'
+        storeName: '',
+        heroTitle: '',
+        heroSubtitle: ''
     });
 
     // Load settings from API

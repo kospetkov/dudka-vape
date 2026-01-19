@@ -13,11 +13,11 @@ export const useSettings = () => {
 
 export const SettingsProvider = ({ children }) => {
     const [settings, setSettings] = useState({
-        storeName: 'DUDKA',
-        storeDescription: 'Преміум вейп продукція',
-        logoUrl: '/logo.png',
-        contactEmails: [],
-        contactPhones: [],
+        storeName: '',
+        storeDescription: '',
+        logoUrl: '',
+        contacts: {},
+        socialLinks: {},
         workingHours: {},
         heroTitle: '',
         heroSubtitle: '',
@@ -74,7 +74,9 @@ export const SettingsProvider = ({ children }) => {
             refreshSettings,
             storeName: settings.storeName,
             logoUrl: settings.logoUrl,
-            storeDescription: settings.storeDescription
+            storeDescription: settings.storeDescription,
+            contacts: settings.contacts || {},
+            socialLinks: settings.socialLinks || {}
         }}>
             {children}
         </SettingsContext.Provider>

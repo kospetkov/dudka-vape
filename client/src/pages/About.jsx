@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useSettings } from '../context/SettingsContext';
 import './Legal/Legal.css';
 
 const About = () => {
+    const { storeName, contacts, socialLinks } = useSettings();
+
     useEffect(() => {
-        document.title = 'Про нас | DUDKA';
+        document.title = `Про нас | ${storeName || 'Shop'}`;
         window.scrollTo(0, 0);
-    }, []);
+    }, [storeName]);
 
     return (
         <div className="legal-page about-page">
@@ -16,56 +19,39 @@ const About = () => {
                 <span>Про нас</span>
             </div>
 
-            <h1>Про DUDKA</h1>
+            <h1>Про {storeName || 'нас'}</h1>
 
             <p>
-                <strong>DUDKA</strong> – це мережа спеціалізованих магазинів, що пропонують 
+                <strong>{storeName || 'Shop'}</strong> – це мережа спеціалізованих магазинів, що пропонують 
                 широкий асортимент сучасних вейп-пристроїв та ароматизаторів найвищої якості.
             </p>
 
             <h2>Наша історія</h2>
             <p>
                 Три роки ми завойовуємо довіру наших клієнтів, пропонуючи виняткові вейп-рішення. 
-                За цей час DUDKA виросла з одного магазину в мережу з 9 локацій по всій Україні, 
-                кожна з яких відрізняється зручним розташуванням та величезним асортиментом продукції.
+                За цей час ми виросли з одного магазину в мережу локацій по всій Україні.
             </p>
 
             <h2>Чим ми виділяємося</h2>
             <ul>
-                <li><strong>Офіційний представник</strong> брендів Vaporesso, Dinner Lady та інших топових світових виробників</li>
-                <li><strong>Професійна консультація</strong> – наші спеціалісти допоможуть підібрати ідеальне рішення</li>
-                <li><strong>Новинки першими</strong> – у нас з'являються найсвіжіші моделі пристроїв</li>
-                <li><strong>Конкурентні ціни</strong> – як офіційний представник, ми пропонуємо найкращі умови</li>
-                <li><strong>Гарантована якість</strong> – тільки оригінальна продукція</li>
+                <li><strong>Офіційний представник</strong> топових світових виробників</li>
+                <li><strong>Професійна консультація</strong></li>
+                <li><strong>Новинки першими</strong></li>
+                <li><strong>Конкурентні ціни</strong></li>
+                <li><strong>Гарантована якість</strong></li>
             </ul>
-
-            <h2>Наш асортимент</h2>
-            <ul>
-                <li>Вейп-пристрої (Vaporesso Xros Pro 2, Voopoo Vmate та інші преміум-серії)</li>
-                <li>Ароматизатори світових брендів (Dinner Lady, Chaser та інші)</li>
-                <li>Аксесуари та комплектуючі</li>
-                <li>Стартові набори для новачків</li>
-            </ul>
-
-            <h2>Чому обирають DUDKA?</h2>
-            <p>
-                Ми не просто продаємо девайси – ми створюємо спільноту поціновувачів якісного паріння. 
-                Кожен клієнт для нас важливий, і ми пам'ятаємо кожного, хто обирає саме нас. 
-                Наші регулярні розіграші, спеціальні акції та нові відкриття магазинів – це спосіб 
-                сказати дякую вам за довіру.
-            </p>
 
             <div className="contact-info">
-                <h3>DUDKA – краще для кращих</h3>
-                <p>
-                    <strong>Режим роботи:</strong> 10:00–20:00 щодня<br />
-                    <strong>Зв'язок:</strong> <a href="https://t.me/dudkavape" target="_blank" rel="noopener noreferrer">Telegram</a>
-                </p>
-                <p>
-                    Слідкуйте за нами в <a href="https://instagram.com/dudkavape" target="_blank" rel="noopener noreferrer">Instagram</a> та{' '}
-                    <a href="https://t.me/dudkavape" target="_blank" rel="noopener noreferrer">Telegram</a> для новин, 
-                    розіграшів та ексклюзивних пропозицій.
-                </p>
+                <h3>{storeName || 'Shop'} – краще для кращих</h3>
+                <p><strong>Режим роботи:</strong> 10:00–20:00 щодня</p>
+                {(socialLinks?.telegram || socialLinks?.instagram) && (
+                    <p>
+                        Слідкуйте за нами в{' '}
+                        {socialLinks?.instagram && <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer">Instagram</a>}
+                        {socialLinks?.instagram && socialLinks?.telegram && ' та '}
+                        {socialLinks?.telegram && <a href={socialLinks.telegram} target="_blank" rel="noopener noreferrer">Telegram</a>}
+                    </p>
+                )}
             </div>
         </div>
     );

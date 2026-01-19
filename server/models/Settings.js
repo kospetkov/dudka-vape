@@ -15,13 +15,30 @@ const settingsSchema = new mongoose.Schema({
     key: { type: String, default: 'main', unique: true },
     
     // Store info
-    storeName: { type: String, default: 'DUDKA' },
-    storeDescription: { type: String, default: 'Преміум вейп продукція' },
-    logoUrl: { type: String, default: '/logo.png' },
+    storeName: { type: String, default: '' },
+    storeDescription: { type: String, default: '' },
+    logoUrl: { type: String, default: '' },
     
-    // Contacts
+    // Contacts (new unified format)
+    contacts: {
+        email: { type: String, default: '' },
+        phone: { type: String, default: '' },
+        address: { type: String, default: '' }
+    },
+    
+    // Social links
+    socialLinks: {
+        instagram: { type: String, default: '' },
+        telegram: { type: String, default: '' },
+        tiktok: { type: String, default: '' },
+        youtube: { type: String, default: '' },
+        facebook: { type: String, default: '' }
+    },
+    
+    // Legacy contacts (for backward compatibility)
     contactEmails: [{ type: String }],
     contactPhones: [{ type: String }],
+    address: { type: String, default: '' },
     
     // Working hours
     workingHours: {
@@ -31,13 +48,20 @@ const settingsSchema = new mongoose.Schema({
     },
     
     // Hero section
-    heroTitle: { type: String, default: 'Преміум Вейп Продукція' },
-    heroSubtitle: { type: String, default: 'Відкрийте найкращий вибір e-liquid, пристроїв та аксесуарів' },
+    heroTitle: { type: String, default: '' },
+    heroSubtitle: { type: String, default: '' },
     heroEnabled: { type: Boolean, default: true },
     
     // Slider
     heroSliderEnabled: { type: Boolean, default: false },
-    heroSlider: [slideSchema]
+    heroSlider: [slideSchema],
+    
+    // Theme (CSS variables)
+    theme: {
+        type: Map,
+        of: String,
+        default: {}
+    }
     
 }, { timestamps: true });
 
@@ -45,11 +69,7 @@ const settingsSchema = new mongoose.Schema({
 settingsSchema.statics.getSettings = async function() {
     let settings = await this.findOne({ key: 'main' });
     if (!settings) {
-        settings = await this.create({
-            key: 'main',
-            contactEmails: ['info@dudka.ua'],
-            contactPhones: ['+380 (50) 123-45-67']
-        });
+        settings = await this.create({ key: 'main' });
     }
     return settings;
 };
